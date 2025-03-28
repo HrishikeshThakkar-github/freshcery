@@ -63,7 +63,7 @@ define("freshcery", "http://freshcery");
                         <?php else : ?>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <div class="avatar-header"><img src="<?php echo freshcery; ?>/assets/img/logo/avatar.jpg"></div> <?php echo $_SESSION['username']; ?>
+                                    <div class="avatar-header"><img src="<?php echo freshcery; ?>/assets/img/logo/avatar.png"></div> <?php echo $_SESSION['username']; ?>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="<?php echo freshcery; ?>/transaction.php">Transactions History</a>
