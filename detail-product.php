@@ -1,4 +1,4 @@
-<?php 
+<?php
 include 'include/header.php';
 include 'configration/db.config.php';
 
@@ -40,6 +40,41 @@ $related_products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 // foreach($related_products as $related_product){
 //     var_dump($related_product);
 // }
+
+
+if (isset($_POST['submit'])) {
+
+
+    $pro_id = $_POST['pro_id'];
+    $pro_title = $_POST['pro_title'];
+    $pro_image = $_POST['pro_image'];
+    $pro_price = $_POST['pro_price'];
+    $pro_qty = $_POST['pro_qty'];
+    $user_id = $_POST['user_id'];
+
+    $query = "INSERT INTO cart (pro_id,pro_title,pro_image,pro_price,pro_qty,user_id) VALUES (:pro_id,:pro_title,:pro_image,:pro_price,:pro_qty,:user_id)";
+    echo $query;
+    var_dump($_SESSION['user_id']);
+    $insert = $pdo->prepare($query);
+
+    $insert -> bindParam(":pro_id",$pro_id);
+    $insert -> bindParam(":pro_title",$pro_title);
+    $insert -> bindParam(":pro_image",$pro_image);
+    $insert -> bindParam(":pro_price",$pro_price);
+    $insert -> bindParam(":pro_qty",$pro_qty);
+    $insert -> bindParam(":user_id",$user_id);
+    $insert -> execute();
+
+    // $insert->execute([
+    //     ':pro_id'    => $pro_id,
+    //     ':pro_title' => $pro_title,
+    //     ':pro_image' => $pro_image,
+    //     ':pro_price' => $pro_price, 
+    //     ':pro_qty'   => $pro_qty,
+    //     ':user_id'   => $user_id,
+    // ]);
+
+}
 ?>
 
 
@@ -65,14 +100,36 @@ $related_products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <strong>Price:</strong> Rp <?php echo $product['price']; ?>
                     </p>
                     <p class="mb-1"><strong>Quantity</strong></p>
-                    <div class="row">
-                        <div class="col-sm-5">
-                            <input class="form-control" type="number" min="1" value="1" name="quantity">
+
+                    <form method="post" id="form-data">
+                        <div class="col-sm-3">
+                            <input class="form-control" name="pro_id" type="text" value="<?php echo $product['id']; ?>">
                         </div>
-                    </div>
-                    <button class="mt-3 btn btn-primary btn-lg">
-                        <i class="fa fa-shopping-basket"></i> Add to Cart
-                    </button>
+                        <div class="col-sm-3">
+                            <input class="form-control" name="pro_title" type="text" value="<?php echo $product['title']; ?>">
+                        </div>
+                        <div class="col-sm-3">
+                            <input class="form-control" name="pro_image" type="text" value="<?php echo $product['image']; ?>">
+                        </div>
+
+                        <div class="col-sm-3">
+                            <input class="form-control" name="pro_price" type="text" value="<?php echo $product['price']; ?>">
+                        </div>
+
+                        <div class="col-sm-3">
+                            <input class="form-control" name="user_id" type="text" value="<?php echo $_SESSION['user_id']; ?>">
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <input class="form-control" type="number" min="1" value="1" name="pro_qty">
+                            </div>
+                        </div>
+                        <button name="submit" type="button" class="btn-insert mt-3 btn btn-primary btn-lg">
+
+                            <i class="fa fa-shopping-basket"></i> Add to Cart
+                        </button>
+
+                    </form>
                 </div>
             </div>
         </div>
@@ -95,7 +152,7 @@ $related_products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                             </a>
                                         </h4>
                                         <div class="card-price">
-                                            <span class="reguler">Rp <?php echo $related['price']?></span>
+                                            <span class="reguler">Rp <?php echo $related['price'] ?></span>
                                         </div>
                                         <a href="detail-product.php?id=<?php echo $related['id']; ?>" class="btn btn-block btn-primary">
                                             View Details
@@ -112,3 +169,30 @@ $related_products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </div>
 
 <?php include 'include/footer.php'; ?>
+
+
+
+<script>
+    $(document).ready(function(){
+        $(".form-control").keyup(function(){
+            var value =$(this).val();
+            value=value.replace(/^(0*)/,"");
+            $(this).val(1);
+        })
+        $(".btn-insert").on("click", function(e){
+            e.preventDefault(); //prevent from reloading
+
+            var form_data = $("#form-data").serialize()+'&submit=submit';
+
+            $.ajax({
+                url: "detail-product.php?id=<?php echo $product_id; ?>",
+                method: "POST",
+                data: form_data,
+                success: function(){
+                    alert("added to cart");
+                }
+
+            });
+        })
+    })
+</script>

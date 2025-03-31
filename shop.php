@@ -73,7 +73,7 @@ ORDER BY c.id, p.id";
                 <div class="shop-categories owl-carousel mt-5">
                     <?php foreach ($allcategories as $category): ?>
                         <div class="item">
-                            <a href="shop.html">
+                        <a href="shop.php#<?php echo 'category-' . $category->id; ?>">
                                 <div class="media d-flex align-items-center justify-content-center">
                                     <span class="d-flex mr-2"><i class="sb-<?php echo $category->icon; ?>"></i></span>
                                     <div class="media-body">
