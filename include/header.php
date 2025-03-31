@@ -26,6 +26,9 @@ define("freshcery", "http://freshcery");
     <link rel="stylesheet" type="text/css" media="all" href="<?php echo freshcery; ?>/assets/packages/thumbelina/thumbelina.css">
     <link rel="stylesheet" type="text/css" media="all" href="<?php echo freshcery; ?>/assets/packages/bootstrap-touchspin/bootstrap-touchspin.css">
     <link rel="stylesheet" type="text/css" media="all" href="<?php echo freshcery; ?>/assets/css/theme.css">
+    <!-- Latest FontAwesome (CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 
 </head>
 
