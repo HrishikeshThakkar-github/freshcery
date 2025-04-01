@@ -1,5 +1,6 @@
-<?php include '../include/header.php' ?>
 <?php include '../configration/db.config.php' ?>
+<?php include '../include/header.php' ?>
+
 <?php
 
 
@@ -76,6 +77,9 @@ if (isset($_POST['login'])) {
                                 </div>
                             </div>
                         </form>
+                        <div class="register-form">
+                            <h5>Not a user?<a style="color: #E91E63;" href="<?php echo freshcery; ?>/auth/register.php"> register</a></h5>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -43,8 +43,6 @@ $related_products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
 if (isset($_POST['submit'])) {
-
-
     $pro_id = $_POST['pro_id'];
     $pro_title = $_POST['pro_title'];
     $pro_image = $_POST['pro_image'];
@@ -52,29 +50,30 @@ if (isset($_POST['submit'])) {
     $pro_qty = $_POST['pro_qty'];
     $user_id = $_POST['user_id'];
 
-    $query = "INSERT INTO cart (pro_id,pro_title,pro_image,pro_price,pro_qty,user_id) VALUES (:pro_id,:pro_title,:pro_image,:pro_price,:pro_qty,:user_id)";
-    echo $query;
-    var_dump($_SESSION['user_id']);
+    // Calculate the total price (pro_price * pro_qty)
+    $pro_total = floatval($pro_price) * intval($pro_qty);
+
+    $query = "INSERT INTO cart (pro_id, pro_title, pro_image, pro_price, pro_qty, pro_total, user_id) 
+              VALUES (:pro_id, :pro_title, :pro_image, :pro_price, :pro_qty, :pro_total, :user_id)";
+    echo $query; // For debugging
+    var_dump($_SESSION['user_id']); // For debugging
+
+    // Prepare the SQL statement
     $insert = $pdo->prepare($query);
 
-    $insert -> bindParam(":pro_id",$pro_id);
-    $insert -> bindParam(":pro_title",$pro_title);
-    $insert -> bindParam(":pro_image",$pro_image);
-    $insert -> bindParam(":pro_price",$pro_price);
-    $insert -> bindParam(":pro_qty",$pro_qty);
-    $insert -> bindParam(":user_id",$user_id);
-    $insert -> execute();
+    // Bind the parameters
+    $insert->bindParam(":pro_id", $pro_id);
+    $insert->bindParam(":pro_title", $pro_title);
+    $insert->bindParam(":pro_image", $pro_image);
+    $insert->bindParam(":pro_price", $pro_price);
+    $insert->bindParam(":pro_qty", $pro_qty);
+    $insert->bindParam(":pro_total", $pro_total);
+    $insert->bindParam(":user_id", $user_id);
 
-    // $insert->execute([
-    //     ':pro_id'    => $pro_id,
-    //     ':pro_title' => $pro_title,
-    //     ':pro_image' => $pro_image,
-    //     ':pro_price' => $pro_price, 
-    //     ':pro_qty'   => $pro_qty,
-    //     ':user_id'   => $user_id,
-    // ]);
-
+    // Execute the query
+    $insert->execute();
 }
+
 ?>
 
 
@@ -102,21 +101,21 @@ if (isset($_POST['submit'])) {
                     <p class="mb-1"><strong>Quantity</strong></p>
 
                     <form method="post" id="form-data">
-                        <div class="col-sm-3">
+                        <div class="col-sm-3" hidden>
                             <input class="form-control" name="pro_id" type="text" value="<?php echo $product['id']; ?>">
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-3" hidden>
                             <input class="form-control" name="pro_title" type="text" value="<?php echo $product['title']; ?>">
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-3" hidden>
                             <input class="form-control" name="pro_image" type="text" value="<?php echo $product['image']; ?>">
                         </div>
 
-                        <div class="col-sm-3">
+                        <div class="col-sm-3" hidden>
                             <input class="form-control" name="pro_price" type="text" value="<?php echo $product['price']; ?>">
                         </div>
 
-                        <div class="col-sm-3">
+                        <div class="col-sm-3" hidden>
                             <input class="form-control" name="user_id" type="text" value="<?php echo $_SESSION['user_id']; ?>">
                         </div>
                         <div class="row">
@@ -124,10 +123,24 @@ if (isset($_POST['submit'])) {
                                 <input class="form-control" type="number" min="1" value="1" name="pro_qty">
                             </div>
                         </div>
-                        <button name="submit" type="button" class="btn-insert mt-3 btn btn-primary btn-lg">
-
+                        <button name="submit" type="button" class="btn-insert mt-3 btn btn-primary btn-lg"
+                            onclick="validateCartAction()">
                             <i class="fa fa-shopping-basket"></i> Add to Cart
                         </button>
+
+                        <script>
+                            function validateCartAction() {
+                                var isLoggedIn = <?php echo isset($_SESSION['username']) ? 'true' : 'false'; ?>;
+
+                                if (!isLoggedIn) {
+                                    alert("Please login or register to add items to the cart.");
+                                    window.location.href = "<?php echo freshcery; ?>/auth/login.php"; // Redirect to login page
+                                } else {
+                                    document.querySelector(".btn-insert").form.submit(); // Submit the form if logged in
+                                }
+                            }
+                        </script>
+
 
                     </form>
                 </div>
@@ -173,23 +186,24 @@ if (isset($_POST['submit'])) {
 
 
 <script>
-    $(document).ready(function(){
-        $(".form-control").keyup(function(){
-            var value =$(this).val();
-            value=value.replace(/^(0*)/,"");
+    $(document).ready(function() {
+        $(".form-control").keyup(function() {
+            var value = $(this).val();
+            value = value.replace(/^(0*)/, "");
             $(this).val(1);
         })
-        $(".btn-insert").on("click", function(e){
+        $(".btn-insert").on("click", function(e) {
             e.preventDefault(); //prevent from reloading
 
-            var form_data = $("#form-data").serialize()+'&submit=submit';
+            var form_data = $("#form-data").serialize() + '&submit=submit';
 
             $.ajax({
                 url: "detail-product.php?id=<?php echo $product_id; ?>",
                 method: "POST",
                 data: form_data,
-                success: function(){
+                success: function() {
                     alert("added to cart");
+                    $(".btn-insert").html("<i class='fa fa-shopping-basket'></i> Add to Cart").prop("disabled", true);
                 }
 
             });

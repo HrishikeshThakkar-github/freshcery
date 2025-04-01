@@ -73,7 +73,7 @@ ORDER BY c.id, p.id";
                 <div class="shop-categories owl-carousel mt-5">
                     <?php foreach ($allcategories as $category): ?>
                         <div class="item">
-                        <a href="shop.php#<?php echo 'category-' . $category->id; ?>">
+                            <a href="shop.php#<?php echo 'category-' . $category->id; ?>">
                                 <div class="media d-flex align-items-center justify-content-center">
                                     <span class="d-flex mr-2"><i class="sb-<?php echo $category->icon; ?>"></i></span>
                                     <div class="media-body">
@@ -84,61 +84,6 @@ ORDER BY c.id, p.id";
                             </a>
                         </div>
                     <?php endforeach; ?>
-                    <!-- <div class="item">
-                            <a href="shop.html">
-                                <div class="media d-flex align-items-center justify-content-center">
-                                    <span class="d-flex mr-2"><i class="sb-bistro-apple"></i></span>
-                                    <div class="media-body">
-                                        <h5>Fruits</h5>
-                                        <p>Variety of Fruits From Local Growers</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="item">
-                            <a href="shop.html">
-                                <div class="media d-flex align-items-center justify-content-center">
-                                    <span class="d-flex mr-2"><i class="sb-bistro-roast-leg"></i></span>
-                                    <div class="media-body">
-                                        <h5>Meats</h5>
-                                        <p>Protein Rich Ingridients From Local Farmers</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="item">
-                            <a href="shop.html">
-                                <div class="media d-flex align-items-center justify-content-center">
-                                    <span class="d-flex mr-2"><i class="sb-bistro-fish-1"></i></span>
-                                    <div class="media-body">
-                                        <h5>Fishes</h5>
-                                        <p>Protein Rich Ingridients From Local Farmers</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="item">
-                            <a href="shop.html">
-                                <div class="media d-flex align-items-center justify-content-center">
-                                    <span class="d-flex mr-2"><i class="sb-bistro-french-fries"></i></span>
-                                    <div class="media-body">
-                                        <h5>Frozen Foods</h5>
-                                        <p>Protein Rich Ingridients From Local Farmers</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="item">
-                            <a href="shop.html">
-                                <div class="media d-flex align-items-center justify-content-center">
-                                    <span class="d-flex mr-2"><i class="sb-bistro-appetizer"></i></span>
-                                    <div class="media-body">
-                                        <h5>Packages</h5>
-                                        <p>Protein Rich Ingridients From Local Farmers</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div> -->
                 </div>
             </div>
         </div>
@@ -228,7 +173,8 @@ ORDER BY c.id, p.id";
                                                 <div class="card-price">
                                                     <span class="reguler">$<?php echo $product['price']; ?></span>
                                                 </div>
-                                                <a href="cart.php?add=<?php echo $product['id']; ?>" class="btn btn-block btn-primary">Add to Cart</a>
+                                                <!-- <a href="cart.php?add=<?php echo $product['id']; ?>" class="btn btn-block btn-primary">Add to Cart</a> -->
+                                                <a href="detail-product.php?id=<?php echo $product['id']; ?>" class="btn btn-block btn-primary">Add to Cart</a>
                                             </div>
                                         </div>
                                     </div>

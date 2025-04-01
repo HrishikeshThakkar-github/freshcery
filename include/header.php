@@ -1,9 +1,19 @@
 <?php
 
-
 session_start();
 define("freshcery", "http://freshcery");
+
+
+include 'cart_function.php'; 
+
+if (isset($_SESSION['user_id'])) {
+    $cart_items = get_cart_items($pdo, $_SESSION['user_id']);
+    
+}
 ?>
+
+
+
 
 
 
@@ -28,6 +38,7 @@ define("freshcery", "http://freshcery");
     <link rel="stylesheet" type="text/css" media="all" href="<?php echo freshcery; ?>/assets/css/theme.css">
     <!-- Latest FontAwesome (CDN) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="icon" type="image/png" href="<?php echo freshcery; ?>/assets/img/favicon.jpeg">
 
 
 </head>
@@ -76,7 +87,7 @@ define("freshcery", "http://freshcery");
                             </li>
                             <li class="nav-item">
                                 <a href="<?php echo freshcery; ?>/cart.php" class="nav-link" data-toggle="" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fa fa-shopping-basket"></i> <span class="badge badge-primary">5</span>
+                                    <i class="fa fa-shopping-basket"></i> <span class="badge badge-primary"><?php echo $cart_items ;?></span>
                                 </a>
 
                             </li>

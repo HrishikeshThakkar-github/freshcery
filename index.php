@@ -1,6 +1,11 @@
+
+<?php error_reporting(E_ALL);
+ini_set('display_errors', 1);?>
 <?php include 'include/header.php' ?>
 <?php include 'configration/db.config.php' ?>
+
 <?php
+
 try {
     $query = "SELECT * FROM categories";
     $categories = $pdo->prepare($query);

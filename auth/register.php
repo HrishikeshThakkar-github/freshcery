@@ -93,6 +93,9 @@ if (isset($_POST['Register'])) {
                                 </div>
                             </div>
                         </form>
+                        <div class="login-form">
+                            <h5>already a user?<a style="color: #E91E63;" href="<?php echo freshcery; ?>/auth/login.php"> login</a></h5>
+                        </div>
                     </div>
                 </div>
             </div>
