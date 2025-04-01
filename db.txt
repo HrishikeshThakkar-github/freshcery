@@ -76,9 +76,7 @@ CREATE TABLE `cart` (
   `pro_image` varchar(200) NOT NULL,
   `pro_price` varchar(20) NOT NULL,
   `pro_qty` int NOT NULL,
+  `pro_total` int(10) NOT NULL,
   `user_id` int NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-
-INSERT INTO cart(pro_id,pro_title,pro_image,pro_price,pro_qty,user_id) VALUES(1,'1','1',1,1,1);

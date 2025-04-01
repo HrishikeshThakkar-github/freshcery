@@ -9,13 +9,16 @@ $products->execute();
 $cart_products = $products->fetchAll(PDO::FETCH_OBJ);
 //print_r($cart_products); 
 
+if(isset($_POST['submit'])){
+    $inp_price=$_POST['inp_price'];
+    $_SESSION['price']=$inp_price;
 
-
-
-
-
-
+    echo "<script>window.location.href='".freshcery."/checkout.php';</script>";
+}
 ?>
+
+
+
 <div id="page-content" class="page-content">
     <div class="banner">
         <div class="jumbotron jumbotron-bg text-center rounded-0" style="background-image: url('<?php echo freshcery; ?>/assets/img/bg-header.jpg');">
@@ -130,7 +133,13 @@ $cart_products = $products->fetchAll(PDO::FETCH_OBJ);
 
                     <div class="clearfix"></div>
                     <h6 class="full_price mt-3"></h6>
-                    <a href="<?php echo freshcery; ?>/checkout.php" class="btn btn-lg btn-primary">Checkout <i class="fa fa-long-arrow-right"></i></a>
+                    <form action="cart.php" method="post">
+                    <input hidden class="inp_price form-control" type="text" value="" name="inp_price">
+                    <button type="submit" name="submit" class="btn btn-lg btn-primary" hidden>Checkout <i class="fa fa-long-arrow-right"></i></button>
+                    <?php if (!empty($PRODUCT_IN_CART)) : ?>
+                    <button type="submit" name="submit" class="btn btn-lg btn-primary" >Checkout <i class="fa fa-long-arrow-right"></i></button>
+                    <?php endif; ?>
+                    </form>
                 </div>
             </div>
         </div>
@@ -247,7 +256,7 @@ $cart_products = $products->fetchAll(PDO::FETCH_OBJ);
             });
 
             $(".full_price").html("Total: Rs. " + sum);
-
+            $(".inp_price").val(sum);
         }
 
     });
