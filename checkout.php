@@ -1,5 +1,5 @@
-<?php 
-session_start(); 
+<?php
+session_start();
 ?>
 
 <?php include 'include/header.php' ?>
@@ -28,8 +28,8 @@ if (isset($_POST['order_details'])) {
 
     $phone_number = htmlspecialchars($_POST['phone_number']);
     $order_notes = htmlspecialchars($_POST['order_notes']);
-    $user_id=$_SESSION['user_id'];
-    $Total_order_value=$_SESSION['payment'];//this signifies the total order total
+    $user_id = $_SESSION['user_id'];
+    $Total_order_value = $_SESSION['payment']; //this signifies the total order total
     if (empty($name) || empty($address) || empty($city)  || empty($country) || empty($zip_code) || empty($email) || empty($phone_number)) {
         echo "<script>alert('one or more required inputs are empty');</script>";
     } else {
@@ -48,8 +48,8 @@ if (isset($_POST['order_details'])) {
             ':user_id' => $user_id,
         ]);
 
+        $_SESSION['Total_order_value'] = $Total_order_value;
         echo "<script>alert('order details verified');</script>";
-
     }
 }
 
@@ -100,12 +100,12 @@ $shipping_charges = 80;
                                 <input class="form-control" name="email" placeholder="Email Address" type="email">
                             </div>
                             <div class="col">
-                                <input class="form-control" name="phone_number" placeholder="Phone Number" type="tel">
+                                <input class="form-control" name="phone_number" placeholder="Phone Number" type="tel" pattern="[0-9]{10}">
                             </div>
                         </div>
 
                         <div class="form-group">
-                        <textarea class="form-control" name="order_notes" placeholder="Order Notes"></textarea>
+                            <textarea class="form-control" name="order_notes" placeholder="Order Notes"></textarea>
 
                         </div>
                     </fieldset>
@@ -175,7 +175,8 @@ $shipping_charges = 80;
                                     </td>
                                     <td class="text-right">
                                         <strong>Rp. <?php echo $checkout_payment = $shipping_charges + $_SESSION['price']; ?></strong>
-                                        <?php $_SESSION['payment'] = $checkout_payment //to be passed on to the stripe payment?>
+                                        <?php $_SESSION['payment'] = $checkout_payment //to be passed on to the stripe payment
+                                        ?>
                                     </td>
                                 </tr>
                             </tfooter>
@@ -184,10 +185,14 @@ $shipping_charges = 80;
 
 
                 </div>
-                <p class="text-right mt-3">
+                    <?php
+                    if (isset($_SESSION['Total_order_value'])) :?>
+                  
+        
+                    <p class="text-right mt-3">
                     <input checked="" type="checkbox"> I’ve read &amp; accept the <a href="#">terms &amp; conditions</a>
-                </p>
-                <a href="#" class="btn btn-primary float-right">PROCEED TO CHECKOUT <i class="fa fa-check"></i>
+                    </p>
+                    <a href="#" class="btn btn-primary float-right">PROCEED TO CHECKOUT <i class="fa fa-check"></i>
                     <form action="submit.php" method="post">
                         <script
                             src="https://checkout.stripe.com/checkout.js" class="stripe-button"
@@ -201,9 +206,10 @@ $shipping_charges = 80;
                         </script>
 
                     </form>
-                </a>
-                <div class="clearfix">
-                </div>
+                    </a>
+                    <?php endif; ?>
+                    <div class="clearfix">
+                    </div>
             </div>
         </div>
     </section>
