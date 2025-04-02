@@ -1,3 +1,9 @@
+<?php 
+session_start();
+include 'configration/db.config.php';
+?>
+
+
 <?php
 session_start();
 require('payment_system/config.php');
@@ -7,12 +13,12 @@ if (isset($_POST['stripeToken'])) {
 
     $token = $_POST['stripeToken'];
 
-    $data = \Stripe\Charge::create([
-        "amount" => $_SESSION['payment']*100, 
-        "currency" => "inr",
-        "description" => "Freshcery",
-        "source" => $token,
-    ]);
+    // $data = \Stripe\Charge::create([
+    //     "amount" => $_SESSION['payment']*100, 
+    //     "currency" => "inr",
+    //     "description" => "Freshcery",
+    //     "source" => $token,
+    // ]);
 
     // Store payment data in session
     $_SESSION['payment'] = $data;
@@ -25,8 +31,14 @@ if (isset($_POST['stripeToken'])) {
           </div>";
 
     // Redirect to home page after 5 seconds
+
+    if (isset($_SESSION['user_id'])) {
+        $delete = $pdo->prepare('DELETE FROM cart WHERE user_id = :user_id');
+        $delete->execute([':user_id' => $_SESSION['user_id']]);
+    }
     header("refresh:5;url=index.php");
     exit();
-
 }
+
+
 ?>
