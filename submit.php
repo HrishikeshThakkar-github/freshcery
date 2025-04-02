@@ -8,7 +8,7 @@ if (isset($_POST['stripeToken'])) {
     $token = $_POST['stripeToken'];
 
     $data = \Stripe\Charge::create([
-        "amount" => $_SESSION['payment']*100, // ₹10,000
+        "amount" => $_SESSION['payment']*100, 
         "currency" => "inr",
         "description" => "Freshcery",
         "source" => $token,
@@ -27,5 +27,6 @@ if (isset($_POST['stripeToken'])) {
     // Redirect to home page after 5 seconds
     header("refresh:5;url=index.php");
     exit();
+
 }
 ?>
