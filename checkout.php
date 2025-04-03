@@ -17,7 +17,6 @@ $cart_products = $products->fetchAll(PDO::FETCH_OBJ);
 
 
 
-
 if (isset($_POST['order_details'])) {
     $name = htmlspecialchars($_POST['name']);
     $address = htmlspecialchars($_POST['address']);
@@ -52,8 +51,6 @@ if (isset($_POST['order_details'])) {
         echo "<script>alert('order details verified');</script>";
     }
 }
-
-
 
 $shipping_charges = 80;
 ?>
@@ -185,31 +182,31 @@ $shipping_charges = 80;
 
 
                 </div>
-                    <?php
-                    if (isset($_SESSION['Total_order_value'])) :?>
-                  
-        
+                <?php
+                if (isset($_SESSION['Total_order_value'])) : ?>
+
+
                     <p class="text-right mt-3">
-                    <input checked="" type="checkbox"> I’ve read &amp; accept the <a href="#">terms &amp; conditions</a>
+                        <input checked="" type="checkbox"> I’ve read &amp; accept the <a href="#">terms &amp; conditions</a>
                     </p>
                     <a href="#" class="btn btn-primary float-right">PROCEED TO CHECKOUT <i class="fa fa-check"></i>
-                    <form action="submit.php" method="post">
-                        <script
-                            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                            data-key="<?php echo $publishableKey ?>"
-                            data-amount="<?php echo $_SESSION["payment"] * 100 ?>"
-                            data-name="Freshcery"
-                            data-description="Stripe Payment Gateway"
-                            data-image="<?php echo freshcery; ?>/assets/img/logo/logo.png"
-                            data-currency="inr"
-                            data-email="hrishi.pvt@gmail.com">
-                        </script>
+                        <form action="submit.php" method="post">
+                            <script
+                                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                data-key="<?php echo $publishableKey ?>"
+                                data-amount="<?php echo $_SESSION["payment"] * 100 ?>"
+                                data-name="Freshcery"
+                                data-description="Stripe Payment Gateway"
+                                data-image="<?php echo freshcery; ?>/assets/img/logo/logo.png"
+                                data-currency="inr"
+                                data-email="hrishi.pvt@gmail.com">
+                            </script>
 
-                    </form>
+                        </form>
                     </a>
-                    <?php endif; ?>
-                    <div class="clearfix">
-                    </div>
+                <?php endif; ?>
+                <div class="clearfix">
+                </div>
             </div>
         </div>
     </section>

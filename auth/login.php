@@ -29,7 +29,13 @@ if (isset($_POST['login'])) {
                 $_SESSION['user_id'] = $fetch['id'];
                 $_SESSION['image'] = $fetch['image'];
 
-                echo "<script> window.location.href='" . freshcery . "'</script>";
+                if ($fetch['role'] === 'admin') {
+                    echo "<script> window.location.href='" . freshcery . "/admin.php'; </script>";
+                } else {
+                    echo "<script> window.location.href='" . freshcery . "';</script>";
+                }
+                exit();
+
             }
         } else {
             echo "<script> alert ('Email / password is wrong') </script>";
