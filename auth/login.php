@@ -30,7 +30,7 @@ if (isset($_POST['login'])) {
                 $_SESSION['image'] = $fetch['image'];
 
                 if ($fetch['role'] === 'admin') {
-                    echo "<script> window.location.href='" . freshcery . "/admin.php'; </script>";
+                    echo "<script> window.location.href='" . freshcery . "/admin-panel/admin.php'; </script>";
                 } else {
                     echo "<script> window.location.href='" . freshcery . "';</script>";
                 }
