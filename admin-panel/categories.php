@@ -65,7 +65,7 @@ $_SESSION['categories_count'] = $count->fetchColumn();
     <h1 class="display-3 fw-semibold text-center">CATEGORIES</h1>
 
 
-      <button href="create-category.html" class="btn btn-primary mb-4 text-center ">ADD Categories</button>
+    <button class="btn btn-primary mb-4 text-center" data-toggle="modal" data-target="#exampleModal">ADD Categories</button>
     </div>
     <div class="container-fluid">
       <table class="table">
@@ -102,6 +102,47 @@ $_SESSION['categories_count'] = $count->fetchColumn();
 
     </div>
   </div>
+
+  <form action="../admin-panel/include/categories_add.inc.php" method="POST">
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add Categories</h5>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="id">category-ID</label>
+              <input type="number" name="id" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="name">Category-Name</label>
+              <input type="text" name="name" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="icon">Icon</label>
+              <input type="text" name="icon" class="form-control" placeholder="hint: bistro-vegetables">
+            </div>
+            <div class="form-group">
+              <label for="image">image</label>
+              <input type="file" name="image" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="description">Description</label>
+              <input type="text" name="description" class="form-control">
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <input type="submit" class="btn btn-success" name="add_student" value="ADD">
+            <a href="<?php echo freshcery; ?>/admin-panel/categories.php" class="btn btn-danger" data-bs-dismiss="modal">Close</a>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
 
   <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
   <script type="text/javascript">
