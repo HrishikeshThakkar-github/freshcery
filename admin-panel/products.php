@@ -89,7 +89,25 @@ $_SESSION['product_count'] = $count->fetchColumn();
                 <td><?php echo $product->title; ?></td>
                 <td><?php echo $product->price; ?></td>
                 <td><?php echo $product->quantity; ?></td>
-                <td><a href="#" class="btn btn-warning text-white text-center ">Update </a> <a href="#" class="btn btn-danger text-center">Delete </a></td>
+                <!-- <td><a href="#" class="btn btn-warning text-white text-center ">Update </a> <a href="#" class="btn btn-danger text-center">Delete </a></td> -->
+                <td>
+                  <button class="btn btn-warning text-white update-btn"
+                    data-id="<?php echo $product->id; ?>"
+                    data-title="<?php echo $product->title; ?>"
+                    data-description="<?php echo $product->description; ?>"
+                    data-price="<?php echo $product->price; ?>"
+                    data-quantity="<?php echo $product->quantity; ?>"
+                    data-image="<?php echo $product->image; ?>"
+                    data-exp_date="<?php echo $product->exp_date; ?>"
+                    data-category_id="<?php echo $product->category_id; ?>"
+                    data-toggle="modal"
+                    data-target="#updateModal">Update</button>
+
+                  <a href="../admin-panel/include/product.inc.php?action=delete&id=<?php echo $product->id; ?>"
+                    class="btn btn-danger text-center"
+                    onclick="return confirm('Are you sure?')">Delete</a>
+                </td>
+
               </tr>
             <?php endforeach; ?>
           <?php else : ?>
@@ -104,10 +122,10 @@ $_SESSION['product_count'] = $count->fetchColumn();
 
     </div>
   </div>
-
+<!-- 
 
   <form action="../admin-panel/include/product_add.inc.php" method="POST">
-    <!-- Modal -->
+    
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -146,13 +164,69 @@ $_SESSION['product_count'] = $count->fetchColumn();
           </div>
           <div class="modal-footer">
             <input type="submit" class="btn btn-success" name="add_student" value="ADD">
-            <a href="<?php echo freshcery; ?>/admin-panel/products.php" class="btn btn-danger" data-bs-dismiss="modal">Close</a>
+            <a href="<?php //echo freshcery; ?>/admin-panel/products.php" class="btn btn-danger" data-bs-dismiss="modal">Close</a>
 
           </div>
         </div>
       </div>
     </div>
-  </form>
+  </form> -->
+  <form action="../admin-panel/include/product.inc.php" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="action" value="add">
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Product</h5>
+                </div>
+                <div class="modal-body">
+                    <input type="text" name="title" placeholder="Title" class="form-control">
+                    <input type="text" name="description" placeholder="Description" class="form-control">
+                    <input type="text" name="price" placeholder="Price" class="form-control">
+                    <input type="number" name="quantity" placeholder="Quantity" class="form-control">
+                    <input type="file" name="image" class="form-control">
+                    <input type="date" name="exp_date" class="form-control">
+                    <input type="number" name="category_id" placeholder="Category ID" class="form-control">
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-success" value="ADD">
+                    <!-- Close button inside the modal footer -->
+<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<form action="../admin-panel/include/product.inc.php" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="action" value="update">
+    <input type="hidden" name="id" id="update_id">
+    <input type="hidden" name="current_image" id="update_current_image">
+    <div class="modal fade" id="updateModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Update Product</h5>
+                </div>
+                <div class="modal-body">
+                    <input type="text" name="title" id="update_title" class="form-control">
+                    <input type="text" name="description" id="update_description" class="form-control">
+                    <input type="text" name="price" id="update_price" class="form-control">
+                    <input type="number" name="quantity" id="update_quantity" class="form-control">
+                    <input type="file" name="image" class="form-control">
+                    <input type="date" name="exp_date" id="update_exp_date" class="form-control">
+                    <input type="number" name="category_id" id="update_category_id" class="form-control">
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-success" value="Update">
+                    <!-- Close button inside the modal footer -->
+<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 
 
 
@@ -167,6 +241,34 @@ $_SESSION['product_count'] = $count->fetchColumn();
     });
   </script>
 
+<script>
+    $(document).ready(function () {
+        $(".update-btn").click(function () {
+            // Get data attributes from clicked button
+            var id = $(this).data("id");
+            var title = $(this).data("title");
+            var description = $(this).data("description");
+            var price = $(this).data("price");
+            var quantity = $(this).data("quantity");
+            var image = $(this).data("image");
+            var exp_date = $(this).data("exp_date");
+            var category_id = $(this).data("category_id");
+
+            // Populate the modal form fields
+            $("#update_id").val(id);
+            $("#update_title").val(title);
+            $("#update_description").val(description);
+            $("#update_price").val(price);
+            $("#update_quantity").val(quantity);
+            $("#update_exp_date").val(exp_date);
+            $("#update_category_id").val(category_id);
+            $("#update_current_image").val(image); // Store current image name
+
+            // Show the modal
+            $("#updateModal").modal("show");
+        });
+    });
+</script>
 
   <script type="text/javascript">
 

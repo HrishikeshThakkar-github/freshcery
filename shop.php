@@ -89,55 +89,7 @@ ORDER BY c.id, p.id";
         </div>
     </div>
 
-    <!-- Dynamically getting the most-wanted -->
-    <!-- <section id="most-wanted">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h2 class="title">Most Wanted</h2>
-                    <div class="product-carousel owl-carousel">
-                        <?php foreach ($favourites as $favourite): ?>
-                            <div class="item">
-                                <div class="card card-product">
-                                    <div class="card-ribbon">
-                                        <div class="card-ribbon-container right">
-                                            <span class="ribbon ribbon-primary">most orderd</span>
-                                        </div>
-                                    </div>
-                                    <div class="card-badge">
-                                        <div class="card-badge-container left">
-                                            <span class="badge badge-default">
-                                                uptill
-                                                <?php echo $favourite->exp_date; ?>
-                                            </span>
-                                            <span class="badge badge-primary">
-                                                20% OFF
-                                            </span>
-                                        </div>
-                                        <img src="assets/img/<?php echo $favourite->image; ?>" alt="Card image 2" class="card-img-top">
-                                    </div>
-                                    <div class="card-body">
-                                        <h4 class="card-title">
-                                            <a href="detail-product.php"><?php echo $favourite->title; ?></a>
-                                        </h4>
-                                        <div class="card-price">
-                                            <span class="discount">Rp. <?php echo $favourite->price * 1.2; ?></span>
-                                            <span class="reguler">Rp. <?php echo $favourite->price; ?></span>
-                                        </div>
-                                        <a href="detail-product.php" class="btn btn-block btn-primary">
-                                            Add to Cart
-                                        </a>
 
-                                    </div>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> -->
 
     <!-- Dynamically getting the categories and the products in those categories -->
 
