@@ -1,5 +1,5 @@
-<?php include '../configration/db.config.php' ?>
-<?php include '../include/header.php' ?>
+<?php require_once '../configration/db.config.php' ?>
+<?php require_once '../include/header.php' ?>
 
 <?php
 

@@ -5,7 +5,7 @@ include '../../configration/db.config.php';
  * Add a new category.
  */
 function addCategory($name, $description, $icon, $image) {
-    global $pdo;
+   global $pdo;
 
     try {
         $query = "INSERT INTO categories (name, description, image, icon) VALUES (:name, :description, :image, :icon)";

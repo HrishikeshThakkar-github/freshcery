@@ -7,6 +7,7 @@ include 'configration/db.config.php';
 <?php
 require('payment_system/config.php');
 
+
 if (isset($_POST['stripeToken'])) {
     \Stripe\Stripe::setVerifySslCerts(false);
 

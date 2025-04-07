@@ -1,5 +1,5 @@
 <?php
-include 'categories.functions.php';
+include 'categories.function.php';
 
 // Handle Add Category
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_category'])) {
