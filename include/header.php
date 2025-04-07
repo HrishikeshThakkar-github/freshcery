@@ -5,7 +5,6 @@ define("freshcery", "http://freshcery");
 
 
 include 'cart_function.php'; 
-
 if (isset($_SESSION['user_id'])) {
     $cart_items = get_cart_items($pdo, $_SESSION['user_id']);
     
