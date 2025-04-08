@@ -1,33 +1,23 @@
 <?php
 session_start();
 define("freshcery", "http://freshcery");
+include '../configration/db.config.php' 
 ?>
-<?php include '../configration/db.config.php' ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="utf-8">
-  <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
   <title>Admin Panel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
   <link href="styles/style.css" rel="stylesheet">
-
   <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-  <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-  <!-- DataTables CSS -->
   <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-
-  <!-- DataTables JS -->
   <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-
-  <!-- DataTables Buttons (for export options) -->
   <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
   <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
   <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
@@ -35,8 +25,6 @@ define("freshcery", "http://freshcery");
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-
-
 </head>
 
 
@@ -44,8 +32,6 @@ define("freshcery", "http://freshcery");
 $query = $pdo->prepare("SELECT * FROM products ");
 $query->execute();
 $products = $query->fetchAll(PDO::FETCH_OBJ);
-
-
 $count = $pdo->prepare("SELECT count(*) FROM products");
 $count->execute();
 $_SESSION['product_count'] = $count->fetchColumn();
@@ -61,10 +47,7 @@ $_SESSION['product_count'] = $count->fetchColumn();
     ?>
     <div style="display: flex; flex-direction:column; justify-content:center; align-items: center;">
       <h1 class="display-3 fw-semibold text-center">PRODUCTS</h1>
-
-
       <button class="btn btn-primary mb-4 text-center" data-toggle="modal" data-target="#exampleModal">ADD Products</button>
-
     </div>
 
     <div class="container-fluid">
@@ -84,26 +67,25 @@ $_SESSION['product_count'] = $count->fetchColumn();
             <?php foreach ($products as $product): ?>
               <tr>
 
-                <td><?php echo $product->id; ?></td>
-                <td><img src="<?php echo freshcery; ?>/assets/img/<?php echo htmlspecialchars($product->image); ?>" height="100px" width="100px"></td>
-                <td><?php echo $product->title; ?></td>
-                <td><?php echo $product->price; ?></td>
-                <td><?php echo $product->quantity; ?></td>
-                <!-- <td><a href="#" class="btn btn-warning text-white text-center ">Update </a> <a href="#" class="btn btn-danger text-center">Delete </a></td> -->
+                <td><?= $product->id; ?></td>
+                <td><img src="<?= freshcery; ?>/assets/img/<?= htmlspecialchars($product->image); ?>" height="100px" width="100px"></td>
+                <td><?= $product->title; ?></td>
+                <td><?= $product->price; ?></td>
+                <td><?= $product->quantity; ?></td>
                 <td>
                   <button class="btn btn-warning text-white update-btn"
-                    data-id="<?php echo $product->id; ?>"
-                    data-title="<?php echo $product->title; ?>"
-                    data-description="<?php echo $product->description; ?>"
-                    data-price="<?php echo $product->price; ?>"
-                    data-quantity="<?php echo $product->quantity; ?>"
-                    data-image="<?php echo $product->image; ?>"
-                    data-exp_date="<?php echo $product->exp_date; ?>"
-                    data-category_id="<?php echo $product->category_id; ?>"
+                    data-id="<?= $product->id; ?>"
+                    data-title="<?= $product->title; ?>"
+                    data-description="<?= $product->description; ?>"
+                    data-price="<?= $product->price; ?>"
+                    data-quantity="<?= $product->quantity; ?>"
+                    data-image="<?= $product->image; ?>"
+                    data-exp_date="<?= $product->exp_date; ?>"
+                    data-category_id="<?= $product->category_id; ?>"
                     data-toggle="modal"
                     data-target="#updateModal">Update</button>
 
-                  <a href="../admin-panel/include/product.inc.php?action=delete&id=<?php echo $product->id; ?>"
+                  <a href="../admin-panel/include/product.inc?action=delete&id=<?= $product->id; ?>"
                     class="btn btn-danger text-center"
                     onclick="return confirm('Are you sure?')">Delete</a>
                 </td>

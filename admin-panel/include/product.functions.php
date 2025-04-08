@@ -1,6 +1,5 @@
 <?php
 include '../../configration/db.config.php';
-
 // Function to add a product
 function addProduct($pdo, $title, $description, $price, $quantity, $image, $exp_date, $category_id) {
     try {

@@ -1,22 +1,13 @@
 <?php
 session_start();
-?>
 
-<?php include 'include/header.php' ?>
-<?php include 'configration/db.config.php' ?>
 
-<?php
-
+include 'include/header.php'; 
+include 'configration/db.config.php'; 
 require('payment_system/config.php');
 $products = $pdo->prepare("SELECT * FROM cart WHERE user_id = :user_id");
 $products->execute([':user_id' => $_SESSION['user_id']]);
-
-
 $cart_products = $products->fetchAll(PDO::FETCH_OBJ);
-
-
-
-
 if (isset($_POST['order_details'])) {
     $name = htmlspecialchars($_POST['name']);
     $address = htmlspecialchars($_POST['address']);
@@ -129,7 +120,7 @@ $shipping_charges = 80;
                                         ?>
                                             <tr>
                                                 <td>
-                                                    <?php echo $PRODUCT_IN_CART->pro_title; ?> x <?php echo $PRODUCT_IN_CART->pro_qty; ?><br>
+                                                    <?= $PRODUCT_IN_CART->pro_title; ?> x <?= $PRODUCT_IN_CART->pro_qty; ?><br>
                                                     <!-- <small>1000g</small> -->
                                                 </td>
 
@@ -155,7 +146,7 @@ $shipping_charges = 80;
                                         <strong>Cart Subtotal</strong>
                                     </td>
                                     <td class="text-right">
-                                        Rp. <?php echo $_SESSION['price']; ?>
+                                        Rp. <?= $_SESSION['price']; ?>
                                     </td>
                                 </tr>
                                 <tr>
@@ -163,7 +154,7 @@ $shipping_charges = 80;
                                         <strong>Shipping</strong>
                                     </td>
                                     <td class="text-right">
-                                        Rp. <?php echo $shipping_charges; ?>
+                                        Rp. <?= $shipping_charges; ?>
                                     </td>
                                 </tr>
                                 <tr>
@@ -171,7 +162,7 @@ $shipping_charges = 80;
                                         <strong>ORDER TOTAL</strong>
                                     </td>
                                     <td class="text-right">
-                                        <strong>Rp. <?php echo $checkout_payment = $shipping_charges + $_SESSION['price']; ?></strong>
+                                        <strong>Rp. <?= $checkout_payment = $shipping_charges + $_SESSION['price']; ?></strong>
                                         <?php $_SESSION['payment'] = $checkout_payment //to be passed on to the stripe payment
                                         ?>
                                     </td>
@@ -193,11 +184,11 @@ $shipping_charges = 80;
                         <form action="submit.php" method="post">
                             <script
                                 src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                                data-key="<?php echo $publishableKey ?>"
-                                data-amount="<?php echo $_SESSION["payment"] * 100 ?>"
+                                data-key="<?= $publishableKey ?>"
+                                data-amount="<?= $_SESSION["payment"] * 100 ?>"
                                 data-name="Freshcery"
                                 data-description="Stripe Payment Gateway"
-                                data-image="<?php echo freshcery; ?>/assets/img/logo/logo.png"
+                                data-image="<?= freshcery; ?>/assets/img/logo/logo.png"
                                 data-currency="inr"
                                 data-email="hrishi.pvt@gmail.com">
                             </script>

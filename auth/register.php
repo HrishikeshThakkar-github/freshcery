@@ -1,7 +1,5 @@
-<?php include '../include/header.php' ?>
-<?php include '../configration/db.config.php' ?>
-
-<?php
+<?php include '../include/header.php';
+include '../configration/db.config.php';
 if (isset($_SESSION['username'])) {
     echo "<script> window.location.href='" . freshcery . "'</script>";
 }
@@ -41,7 +39,7 @@ if (isset($_POST['Register'])) {
 ?>
 <div id="page-content" class="page-content">
     <div class="banner">
-        <div class="jumbotron jumbotron-bg text-center rounded-0" style="background-image: url('<?php echo freshcery; ?>/assets/img/bg-header.jpg');">
+        <div class="jumbotron jumbotron-bg text-center rounded-0" style="background-image: url('<?= freshcery; ?>/assets/img/bg-header.jpg');">
             <div class="container">
                 <h1 class="pt-5">
                     Register Page
@@ -94,7 +92,7 @@ if (isset($_POST['Register'])) {
                             </div>
                         </form>
                         <div class="login-form">
-                            <h5>already a user?<a style="color: #E91E63;" href="<?php echo freshcery; ?>/auth/login.php"> login</a></h5>
+                            <h5>already a user?<a style="color: #E91E63;" href="<?= freshcery; ?>/auth/login"> login</a></h5>
                         </div>
                     </div>
                 </div>

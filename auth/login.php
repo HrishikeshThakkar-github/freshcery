@@ -1,8 +1,5 @@
-<?php require_once '../configration/db.config.php' ?>
-<?php require_once '../include/header.php' ?>
-
-<?php
-
+<?php require_once '../configration/db.config.php';
+ require_once '../include/header.php' ;
 
 if (isset($_SESSION['username'])) {
     echo "<script> window.location.href='" . freshcery . "'</script>"; // so that whenever if a user is already logged in then that user cant acces the login page directly by editing the url
@@ -46,7 +43,7 @@ if (isset($_POST['login'])) {
 ?>
 <div id="page-content" class="page-content">
     <div class="banner">
-        <div class="jumbotron jumbotron-bg text-center rounded-0" style="background-image: url('<?php echo freshcery; ?>/assets/img/bg-header.jpg');">
+        <div class="jumbotron jumbotron-bg text-center rounded-0" style="background-image: url('<?= freshcery; ?>/assets/img/bg-header.jpg');">
             <div class="container">
                 <h1 class="pt-5">
                     Login Page
@@ -84,7 +81,7 @@ if (isset($_POST['login'])) {
                             </div>
                         </form>
                         <div class="register-form">
-                            <h5>Not a user?<a style="color: #E91E63;" href="<?php echo freshcery; ?>/auth/register.php"> register</a></h5>
+                            <h5>Not a user?<a style="color: #E91E63;" href="<?= freshcery; ?>/auth/register"> register</a></h5>
                         </div>
                     </div>
                 </div>

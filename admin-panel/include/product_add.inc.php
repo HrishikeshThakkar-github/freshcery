@@ -1,5 +1,4 @@
-<?php include '../../configration/db.config.php' ?>
-<?php
+<?php include '../../configration/db.config.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $title = htmlspecialchars($_POST['title']);
@@ -41,5 +40,3 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit();
     }
 }
-
-?>

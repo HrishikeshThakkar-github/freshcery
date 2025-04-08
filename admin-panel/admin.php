@@ -37,19 +37,19 @@ define("freshcery", "http://freshcery");
         <div class="collapse navbar-collapse" id="navbarText">
           <ul class="navbar-nav side-nav">
             <li class="nav-item">
-              <a class="nav-link text-white" style="margin-left: 20px;" href="<?php echo freshcery; ?>/admin-panel/admin.php">Home
+              <a class="nav-link text-white" style="margin-left: 20px;" href="<?= freshcery; ?>/admin-panel/admin.php">Home
                 <span class="sr-only">(current)</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="<?php echo freshcery; ?>/admin-panel/categories.php" style="margin-left: 20px;">Categories</a>
+              <a class="nav-link" href="<?= freshcery; ?>/admin-panel/categories.php" style="margin-left: 20px;">Categories</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="<?php echo freshcery; ?>/admin-panel/products.php" style="margin-left: 20px;">Products</a>
+              <a class="nav-link" href="<?= freshcery; ?>/admin-panel/products.php" style="margin-left: 20px;">Products</a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="<?php echo freshcery; ?>/admin-panel/orders.php" style="margin-left: 20px;">Orders</a>
+              <a class="nav-link" href="<?= freshcery; ?>/admin-panel/orders.php" style="margin-left: 20px;">Orders</a>
             </li>
 
           </ul>
@@ -60,14 +60,14 @@ define("freshcery", "http://freshcery");
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="<?php echo freshcery; ?>/auth/admin-logout.php"">logout
+              <a class="nav-link" href="<?= freshcery; ?>/auth/admin-logout.php"">logout
                 <span class="sr-only">(current)</span>
               </a>
             </li>
             <li class="nav-item dropdown">
               
               <a class="nav-link"  id="navbarDropdown" role="button"  aria-haspopup="true" aria-expanded="false" style="color:white">
-                <?php echo $_SESSION['username']?>
+                <?= $_SESSION['username']?>
               </a>
             </li>
 
@@ -85,7 +85,7 @@ define("freshcery", "http://freshcery");
             <div class="card-body">
               <h5 class="card-title">Products</h5>
               <!-- <h6 class="card-subtitle mb-2 text-muted">Bootstrap 4.0.0 Snippet by pradeep330</h6> -->
-              <p class="card-text">number of products:     <?php echo $_SESSION['product_count']?></p>
+              <p class="card-text">number of products:     <?= $_SESSION['product_count']?></p>
 
             </div>
           </div>
@@ -95,7 +95,7 @@ define("freshcery", "http://freshcery");
             <div class="card-body">
               <h5 class="card-title">Orders</h5>
               <!-- <h6 class="card-subtitle mb-2 text-muted">Bootstrap 4.0.0 Snippet by pradeep330</h6> -->
-              <p class="card-text">number of orders:  <?php echo $_SESSION['orders_count']?></p>
+              <p class="card-text">number of orders:  <?= $_SESSION['orders_count']?></p>
 
             </div>
           </div>
@@ -105,7 +105,7 @@ define("freshcery", "http://freshcery");
             <div class="card-body">
               <h5 class="card-title">Categories</h5>
 
-              <p class="card-text">number of categories:  <?php echo $_SESSION['categories_count']?></p>
+              <p class="card-text">number of categories:  <?= $_SESSION['categories_count']?></p>
 
             </div>
           </div>

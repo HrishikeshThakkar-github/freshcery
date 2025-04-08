@@ -1,11 +1,6 @@
-
-<?php error_reporting(E_ALL);
-ini_set('display_errors', 1);?>
-<?php include 'include/header.php' ?>
-<?php include 'configration/db.config.php' ?>
-
-<?php
-
+<?php 
+include 'include/header.php';
+include 'configration/db.config.php';
 try {
     $query = "SELECT * FROM categories";
     $categories = $pdo->prepare($query);
@@ -14,7 +9,6 @@ try {
 } catch (PDOException $e) {
     die("Database error: " . $e->getMessage()); // Or log the error
 }
-
 ?>
 <div id="page-content" class="page-content">
     <div class="banner">
@@ -31,7 +25,6 @@ try {
                 <p class="lead">
                     Always Fresh Everyday.
                 </p>
-
                 <div class="row">
                     <div class="col-md-4">
                         <div class="card border-0 text-center">
@@ -47,7 +40,6 @@ try {
                                 <p class="card-text">
                                     Simply click-to-buy on the product you want and submit your order when you're done.
                                 </p>
-
                             </div>
                         </div>
                     </div>
@@ -65,7 +57,6 @@ try {
                                 <p class="card-text">
                                     Our team ensures the produce quality is up to our standard and delivers to your door within 24 hours of harvest day.
                                 </p>
-
                             </div>
                         </div>
                     </div>
@@ -90,7 +81,6 @@ try {
             </div>
         </div>
     </div>
-
     <section id="why">
         <h2 class="title">Why Freschery</h2>
         <div class="container">
@@ -109,7 +99,6 @@ try {
                             <p class="card-text">
                                 Our farm-to-table concept emphasizes on getting the fresh produce directly from local farms to your tables within one day, hence you know you get the freshest produce straight from harvest.
                             </p>
-
                         </div>
                     </div>
                 </div>
@@ -127,7 +116,6 @@ try {
                             <p class="card-text">
                                 We want you to know exactly who is growing your food by having the farmers profile on each item and farmers page. You’re welcome to visit the farms and see the love they put into growing your food.
                             </p>
-
                         </div>
                     </div>
                 </div>
@@ -148,33 +136,26 @@ try {
                         </div>
                     </div>
                 </div>
-
                 <div class="col-md-12 mt-5 text-center">
-                    <a href="shop.php" class="btn btn-primary btn-lg">SHOP NOW</a>
+                    <a href="shop" class="btn btn-primary btn-lg">SHOP NOW</a>
                 </div>
             </div>
         </div>
     </section>
-
-
-
     <section id="categories" class="pb-0 gray-bg">
         <h2 class="title">Categories</h2>
         <div class="landing-categories owl-carousel">
             <?php foreach ($allcategories as $category): ?>
                 <div class="item">
                     <div class="card rounded-0 border-0 text-center">
-                        <img src="assets/img/<?php echo $category->image; ?>">
+                        <img src="assets/img/<?= $category->image; ?>">
                         <div class="card-img-overlay d-flex align-items-center justify-content-center">
-                            <a href="shop.php#<?php echo 'category-' . $category->id; ?>" class="btn btn-primary btn-lg">
-                                <?php echo htmlspecialchars($category->name); ?>
+                            <a href="shop#<?= 'category-' . $category->id; ?>" class="btn btn-primary btn-lg">
+                                <?= htmlspecialchars($category->name); ?>
                             </a>
-
-                            <!-- add a way to redirect to that particular section can be done by id and it adds #category-id in the url  -->
                         </div>
                     </div>
                 </div>
-
             <?php endforeach; ?>
         </div>
     </section>

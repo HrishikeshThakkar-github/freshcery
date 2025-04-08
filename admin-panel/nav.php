@@ -1,13 +1,17 @@
 <?php
 session_start();
 define("freshcery", "http://freshcery");
+//anyother user except admin cannot access the admin panel
+if (!isset($_SESSION['username']) || $_SESSION['username'] != 'admin') {
+  header("Location: /index.php");
+  exit;
+}
+include '../configration/db.config.php' 
 ?>
-<?php include '../configration/db.config.php' ?>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="styles/style.css">
 
-<!-- Navbar -->
 <nav class="navbar header-top fixed-top navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
     <a class="navbar-brand" href="#" style="font-style: italic;">
@@ -21,26 +25,26 @@ define("freshcery", "http://freshcery");
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav side-nav">
         <li class="nav-item">
-          <a class="nav-link text-white" href="<?php echo freshcery; ?>/admin-panel/admin.php">Home</a>
+          <a class="nav-link text-white" href="<?= freshcery; ?>/admin-panel/admin">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="<?php echo freshcery; ?>/admin-panel/categories.php">Categories</a>
+          <a class="nav-link" href="<?= freshcery; ?>/admin-panel/categories">Categories</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="<?php echo freshcery; ?>/admin-panel/products.php">Products</a>
+          <a class="nav-link" href="<?= freshcery; ?>/admin-panel/products">Products</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="<?php echo freshcery; ?>/admin-panel/orders.php">Orders</a>
+          <a class="nav-link" href="<?= freshcery; ?>/admin-panel/orders">Orders</a>
         </li>
       </ul>
 
       <ul class="navbar-nav ml-md-auto d-md-flex">
         <li class="nav-item">
-          <a class="nav-link" href="<?php echo freshcery; ?>/auth/admin-logout.php">Logout</a>
+          <a class="nav-link" href="<?= freshcery; ?>/auth/admin-logout">Logout</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link" id="navbarDropdown" style="color:white;">
-            <?php echo $_SESSION['username'] ?>
+            <?= $_SESSION['username'] ?>
           </a>
         </li>
       </ul>

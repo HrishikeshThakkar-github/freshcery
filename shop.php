@@ -1,31 +1,21 @@
-<?php include 'configration/db.config.php' ?>
-<?php
+<?php include 'configration/db.config.php' ;
 try {
     $query = "SELECT * FROM categories";
     $categories = $pdo->prepare($query);
     $categories->execute();
     $allcategories = $categories->fetchAll(PDO::FETCH_OBJ);
 
-    //most wanted
-    $query = "SELECT * FROM products where status = 1 ";
-    $favourite = $pdo->prepare($query);
-    $favourite->execute();
-    $favourites = $favourite->fetchAll(PDO::FETCH_OBJ);
-
-
-    //category product crud
     $query = "SELECT c.id AS category_id, c.name AS category_name, c.image AS category_image, 
     c.icon AS category_icon, p.id AS product_id, p.title, p.description, 
     p.price, p.image AS product_image, p.exp_date, p.status
-FROM categories c
-LEFT JOIN products p ON c.id = p.category_id
-ORDER BY c.id, p.id";
+    FROM categories c
+    LEFT JOIN products p ON c.id = p.category_id
+    ORDER BY c.id, p.id";
 
     $stmt = $pdo->prepare($query);
     $stmt->execute();
     $rows = $stmt->fetchAll(PDO::FETCH_OBJ);
 
-    // Organizing categories and products into an array
     $categories = [];
     foreach ($rows as $row) {
         $categories[$row->category_id]['name'] = $row->category_name;
@@ -44,11 +34,9 @@ ORDER BY c.id, p.id";
         }
     }
 } catch (PDOException $e) {
-    die("Database error: " . $e->getMessage()); // Or log the error
+    die("Database error: " . $e->getMessage());
 }
-
 ?>
-
 
 <?php include 'include/header.php' ?>
 <div id="page-content" class="page-content">
@@ -64,21 +52,19 @@ ORDER BY c.id, p.id";
             </div>
         </div>
     </div>
-
-
-    <!-- Dynamically getting the categories -->
+    <!-- Dynamically getting the categories along with icons-->
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="shop-categories owl-carousel mt-5">
                     <?php foreach ($allcategories as $category): ?>
                         <div class="item">
-                            <a href="shop.php#<?php echo 'category-' . $category->id; ?>">
+                            <a href="shop#<?= 'category-' . $category->id; ?>">
                                 <div class="media d-flex align-items-center justify-content-center">
-                                    <span class="d-flex mr-2"><i class="sb-<?php echo $category->icon; ?>"></i></span>
+                                    <span class="d-flex mr-2"><i class="sb-<?= $category->icon; ?>"></i></span>
                                     <div class="media-body">
-                                        <h5><?php echo $category->name; ?></h5>
-                                        <p><?php echo substr($category->description, 0, 40); ?></p>
+                                        <h5><?= $category->name; ?></h5>
+                                        <p><?= substr($category->description, 0, 40); ?></p>
                                     </div>
                                 </div>
                             </a>
@@ -88,20 +74,15 @@ ORDER BY c.id, p.id";
             </div>
         </div>
     </div>
-
-
-
     <!-- Dynamically getting the categories and the products in those categories -->
-
-
     <?php foreach ($categories as $category_id => $category): ?>
-        <section id="category-<?php echo $category_id; ?>" class="gray-bg">
+        <section id="category-<?= $category_id; ?>" class="gray-bg">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
                         <h2 class="title">
-                            <i class="<?php echo htmlspecialchars($category['icon']); ?>"></i>
-                            <?php echo htmlspecialchars($category['name']); ?>
+                            <i class="<?= htmlspecialchars($category['icon']); ?>"></i>
+                            <?= htmlspecialchars($category['name']); ?>
                         </h2>
                         <div class="product-carousel owl-carousel">
                             <?php if (!empty($category['products'])): ?>
@@ -110,23 +91,22 @@ ORDER BY c.id, p.id";
                                         <div class="card card-product">
                                             <div class="card-badge">
                                                 <div class="card-badge-container left">
-                                                    <span class="badge badge-default">Expires: <?php echo htmlspecialchars($product['exp_date']); ?></span>
+                                                    <span class="badge badge-default">Expires: <?= htmlspecialchars($product['exp_date']); ?></span>
                                                 </div>
-                                                <img src="assets/img/<?php echo htmlspecialchars($product['image']); ?>"
-                                                    alt="<?php echo htmlspecialchars($product['title']); ?>"
+                                                <img src="assets/img/<?= htmlspecialchars($product['image']); ?>"
+                                                    alt="<?= htmlspecialchars($product['title']); ?>"
                                                     class="card-img-top">
                                             </div>
                                             <div class="card-body">
                                                 <h4 class="card-title">
-                                                    <a href="detail-product.php?id= <?php echo $product['id']; ?>">
-                                                        <?php echo htmlspecialchars($product['title']); ?>
+                                                    <a href="detail-product?id= <?= $product['id']; ?>">
+                                                        <?= htmlspecialchars($product['title']); ?>
                                                     </a>
                                                 </h4>
                                                 <div class="card-price">
-                                                    <span class="reguler">$<?php echo $product['price']; ?></span>
+                                                    <span class="reguler">$<?= $product['price']; ?></span>
                                                 </div>
-                                                <!-- <a href="cart.php?add=<?php echo $product['id']; ?>" class="btn btn-block btn-primary">Add to Cart</a> -->
-                                                <a href="detail-product.php?id=<?php echo $product['id']; ?>" class="btn btn-block btn-primary">Add to Cart</a>
+                                                <a href="detail-product?id=<?= $product['id']; ?>" class="btn btn-block btn-primary">Add to Cart</a>
                                             </div>
                                         </div>
                                     </div>

@@ -2,11 +2,9 @@
 include 'include/header.php';
 include 'configration/db.config.php';
 
-//getting the orders done by this user
 $products = $pdo->prepare("SELECT * FROM orders WHERE user_id = :user_id");
 $products->execute([':user_id' => $_SESSION['user_id']]);
 $orders = $products->fetchAll(PDO::FETCH_OBJ);
-
 ?>
     <div id="page-content" class="page-content">
         <div class="banner">
@@ -43,10 +41,10 @@ $orders = $products->fetchAll(PDO::FETCH_OBJ);
                                             <?php foreach ($orders as $order): ?>
                                                 <tr>
                                                     <td width="5%"></td>
-                                                    <td><?php echo $order->id; ?></td>
-                                                    <td><?php echo $order->created_at; ?></td>
-                                                    <td>Rp. <?php echo $order->Total_order_value; ?></td>
-                                                    <td><?php echo $order->status; ?></td>
+                                                    <td><?= $order->id; ?></td>
+                                                    <td><?= $order->created_at; ?></td>
+                                                    <td>Rp. <?= $order->Total_order_value; ?></td>
+                                                    <td><?= $order->status; ?></td>
                                                 </tr>
                                             <?php endforeach; ?>
                                         <?php else : ?>
@@ -62,7 +60,5 @@ $orders = $products->fetchAll(PDO::FETCH_OBJ);
                 </div>
             </div>
         </section>
-
-       
     </div>
     <?php include 'include/footer.php'; ?>

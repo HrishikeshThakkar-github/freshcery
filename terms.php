@@ -12,7 +12,6 @@
                 </div>
             </div>
         </div>
-
         <section id="faq">
             <div class="container">
                 <div class="row">
@@ -72,8 +71,6 @@
                         <p>Occasionally our Personal Shoppers get overwhelmed with orders. During these times, the next available delivery slot may be later in the day. Use the delivery checker in the app to see the next available delivery for your order.</p>
                         <p><strong>24. I have many more questions for you!</strong></p>
                         <p>Contact us! We will be there at support.indonesia@Freshchery.com.</p>
-
-
                     </div>
                 </div>
             </div>

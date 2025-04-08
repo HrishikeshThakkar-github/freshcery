@@ -5,12 +5,10 @@ include 'configration/db.config.php';
 if (!isset($_GET['id']) || empty($_GET['id']) || !is_numeric($_GET['id'])) {
     die("<h2>Invalid Product ID!</h2>");
 }
-
 $product_id = intval($_GET['id']);
 if ($product_id <= 0) {
     die("<h2>Invalid Product ID!</h2>");
 }
-
 $query = "SELECT p.*, c.name AS category_name, c.id AS category_id 
           FROM products p 
           JOIN categories c ON p.category_id = c.id 
@@ -25,22 +23,11 @@ if (!$product) {
 
 $category_id = $product['category_id'];
 
-// Debug: Ensure the correct product is fetched
-// echo "<pre>";
-// var_dump($product);
-// echo "</pre>";
-
 // ✅ Fetch related products in the same category (excluding current product)
 $related_query = "SELECT * FROM products WHERE category_id = ? AND id != ? LIMIT 5";
 $stmt = $pdo->prepare($related_query);
 $stmt->execute([$category_id, $product_id]);
 $related_products = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-// Debug: Ensure related products are correct
-// foreach($related_products as $related_product){
-//     var_dump($related_product);
-// }
-
 
 if (isset($_POST['submit'])) {
     $pro_id = $_POST['pro_id'];
@@ -50,15 +37,10 @@ if (isset($_POST['submit'])) {
     $pro_qty = $_POST['pro_qty'];
     $user_id = $_POST['user_id'];
 
-    // Calculate the total price (pro_price * pro_qty)
     $pro_total = floatval($pro_price) * intval($pro_qty);
 
     $query = "INSERT INTO cart (pro_id, pro_title, pro_image, pro_price, pro_qty, pro_total, user_id) 
               VALUES (:pro_id, :pro_title, :pro_image, :pro_price, :pro_qty, :pro_total, :user_id)";
-    echo $query; // For debugging
-    var_dump($_SESSION['user_id']); // For debugging
-
-    // Prepare the SQL statement
     $insert = $pdo->prepare($query);
 
     // Bind the parameters
@@ -69,54 +51,48 @@ if (isset($_POST['submit'])) {
     $insert->bindParam(":pro_qty", $pro_qty);
     $insert->bindParam(":pro_total", $pro_total);
     $insert->bindParam(":user_id", $user_id);
-
-    // Execute the query
     $insert->execute();
 }
-
 ?>
-
-
 <div id="page-content" class="page-content">
     <div class="banner">
         <div class="jumbotron jumbotron-bg text-center rounded-0" style="background-image: url('assets/img/bg-header.jpg');">
             <div class="container">
-                <h1 class="pt-5"><?php echo htmlspecialchars($product['title'] ?? 'No Title'); ?></h1>
-                <p class="lead"><?php echo htmlspecialchars($product['description'] ?? 'No Description'); ?></p>
+                <h1 class="pt-5"><?= htmlspecialchars($product['title'] ?? 'No Title'); ?></h1>
+                <p class="lead"><?= htmlspecialchars($product['description'] ?? 'No Description'); ?></p>
             </div>
         </div>
     </div>
-
     <div class="product-detail">
         <div class="container">
             <div class="row">
                 <div class="col-sm-6">
-                    <img alt="Product Image" src="assets/img/<?php echo htmlspecialchars($product['image'] ?? 'default.jpg'); ?>" style="width: 100%;">
+                    <img alt="Product Image" src="assets/img/<?= htmlspecialchars($product['image'] ?? 'default.jpg'); ?>" style="width: 100%;">
                 </div>
                 <div class="col-sm-6">
                     <p>
-                        <strong>Category:</strong> <?php echo htmlspecialchars($product['category_name'] ?? 'Unknown'); ?><br>
-                        <strong>Price:</strong> Rp <?php echo $product['price']; ?>
+                        <strong>Category:</strong> <?= htmlspecialchars($product['category_name'] ?? 'Unknown'); ?><br>
+                        <strong>Price:</strong> Rp <?= $product['price']; ?>
                     </p>
                     <p class="mb-1"><strong>Quantity</strong></p>
 
                     <form method="post" id="form-data">
                         <div class="col-sm-3" hidden>
-                            <input class="form-control" name="pro_id" type="text" value="<?php echo $product['id']; ?>">
+                            <input class="form-control" name="pro_id" type="text" value="<?= $product['id']; ?>">
                         </div>
                         <div class="col-sm-3" hidden>
-                            <input class="form-control" name="pro_title" type="text" value="<?php echo $product['title']; ?>">
+                            <input class="form-control" name="pro_title" type="text" value="<?= $product['title']; ?>">
                         </div>
                         <div class="col-sm-3" hidden>
-                            <input class="form-control" name="pro_image" type="text" value="<?php echo $product['image']; ?>">
-                        </div>
-
-                        <div class="col-sm-3" hidden>
-                            <input class="form-control" name="pro_price" type="text" value="<?php echo $product['price']; ?>">
+                            <input class="form-control" name="pro_image" type="text" value="<?= $product['image']; ?>">
                         </div>
 
                         <div class="col-sm-3" hidden>
-                            <input class="form-control" name="user_id" type="text" value="<?php echo $_SESSION['user_id']; ?>">
+                            <input class="form-control" name="pro_price" type="text" value="<?= $product['price']; ?>">
+                        </div>
+
+                        <div class="col-sm-3" hidden>
+                            <input class="form-control" name="user_id" type="text" value="<?= $_SESSION['user_id']; ?>">
                         </div>
                         <div class="row">
                             <div class="col-sm-5">
@@ -127,27 +103,22 @@ if (isset($_POST['submit'])) {
                             onclick="validateCartAction()">
                             <i class="fa fa-shopping-basket"></i> Add to Cart
                         </button>
-
                         <script>
                             function validateCartAction() {
-                                var isLoggedIn = <?php echo isset($_SESSION['username']) ? 'true' : 'false'; ?>;
-
+                                var isLoggedIn = <?= isset($_SESSION['username']) ? 'true' : 'false'; ?>;
                                 if (!isLoggedIn) {
                                     alert("Please login or register to add items to the cart.");
-                                    window.location.href = "<?php echo freshcery; ?>/auth/login.php"; // Redirect to login page
+                                    window.location.href = "<?= freshcery; ?>/auth/login"; // Redirect to login page
                                 } else {
                                     document.querySelector(".btn-insert").form.submit(); // Submit the form if logged in
                                 }
                             }
                         </script>
-
-
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
     <section id="related-product">
         <div class="container">
             <div class="row">
@@ -157,17 +128,17 @@ if (isset($_POST['submit'])) {
                         <?php foreach ($related_products as $related) { ?>
                             <div class="item">
                                 <div class="card card-product">
-                                    <img src="assets/img/<?php echo htmlspecialchars($related['image'] ?? 'default.jpg'); ?>" alt="Related Product" class="card-img-top">
+                                    <img src="assets/img/<?= htmlspecialchars($related['image'] ?? 'default.jpg'); ?>" alt="Related Product" class="card-img-top">
                                     <div class="card-body">
                                         <h4 class="card-title">
-                                            <a href="detail-product.php?id=<?php echo $related['id']; ?>">
-                                                <?php echo htmlspecialchars($related['title'] ?? 'No Title'); ?>
+                                            <a href="detail-product?id=<?= $related['id']; ?>">
+                                                <?= htmlspecialchars($related['title'] ?? 'No Title'); ?>
                                             </a>
                                         </h4>
                                         <div class="card-price">
-                                            <span class="reguler">Rp <?php echo $related['price'] ?></span>
+                                            <span class="reguler">Rp <?= $related['price'] ?></span>
                                         </div>
-                                        <a href="detail-product.php?id=<?php echo $related['id']; ?>" class="btn btn-block btn-primary">
+                                        <a href="detail-product?id=<?= $related['id']; ?>" class="btn btn-block btn-primary">
                                             View Details
                                         </a>
                                     </div>
@@ -180,11 +151,7 @@ if (isset($_POST['submit'])) {
         </div>
     </section>
 </div>
-
 <?php include 'include/footer.php'; ?>
-
-
-
 <script>
     $(document).ready(function() {
         $(".form-control").keyup(function() {
@@ -198,7 +165,7 @@ if (isset($_POST['submit'])) {
             var form_data = $("#form-data").serialize() + '&submit=submit';
 
             $.ajax({
-                url: "detail-product.php?id=<?php echo $product_id; ?>",
+                url: "detail-product.php?id=<?= $product_id; ?>",
                 method: "POST",
                 data: form_data,
                 success: function() {

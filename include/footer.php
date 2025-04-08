@@ -9,22 +9,22 @@
                     <h5>Links</h5>
                     <ul>
                         <li>
-                            <a href="about.php">About</a>
+                            <a href="about">About</a>
                         </li>
                         <li>
-                            <a href="contact.php">Contact Us</a>
+                            <a href="contact">Contact Us</a>
                         </li>
                         <li>
-                            <a href="faq.php">FAQ</a>
+                            <a href="faq">FAQ</a>
                         </li>
                         <li>
                             <a href="javascript:void(0)">How it Works</a>
                         </li>
                         <li>
-                            <a href="terms.php">Terms</a>
+                            <a href="terms">Terms</a>
                         </li>
                         <li>
-                            <a href="privacy.php">Privacy Policy</a>
+                            <a href="privacy">Privacy Policy</a>
                         </li>
                     </ul>
                 </div>
@@ -55,11 +55,11 @@
                      <h5>Get Our App</h5>
                      <ul class="mb-0">
                          <li class="download-app">
-                             <a href="#"><img src="<?php echo freshcery;?>/assets/img/playstore.png"></a>
+                             <a href="#"><img src="<?= freshcery;?>/assets/img/playstore.png"></a>
                          </li>
                          <li style="height: 200px">
                              <div class="mockup">
-                                 <img src="<?php echo freshcery;?>/assets/img/mockup.png">
+                                 <img src="<?= freshcery;?>/assets/img/mockup.png">
                              </div>
                          </li>
                      </ul>
@@ -69,15 +69,15 @@
         <p class="copyright">&copy; 2018 Freshcery | Groceries Organic Store. All rights reserved.</p>
     </footer>
 
-    <script type="text/javascript" src="<?php echo freshcery;?>/assets/js/jquery.js"></script>
-    <script type="text/javascript" src="<?php echo freshcery;?>/assets/js/jquery-migrate.js"></script>
-    <script type="text/javascript" src="<?php echo freshcery;?>/assets/packages/bootstrap/libraries/popper.js"></script>
-    <script type="text/javascript" src="<?php echo freshcery;?>/assets/packages/bootstrap/bootstrap.js"></script>
-    <script type="text/javascript" src="<?php echo freshcery;?>/assets/packages/o2system-ui/o2system-ui.js"></script>
-    <script type="text/javascript" src="<?php echo freshcery;?>/assets/packages/owl-carousel/owl-carousel.js"></script>
-    <script type="text/javascript" src="<?php echo freshcery;?>/assets/packages/cloudzoom/cloudzoom.js"></script>
-    <script type="text/javascript" src="<?php echo freshcery;?>/assets/packages/thumbelina/thumbelina.js"></script>
-    <script type="text/javascript" src="<?php echo freshcery;?>/assets/packages/bootstrap-touchspin/bootstrap-touchspin.js"></script>
-    <script type="text/javascript" src="<?php echo freshcery;?>/assets/js/theme.js"></script>
+    <script type="text/javascript" src="<?= freshcery;?>/assets/js/jquery.js"></script>
+    <script type="text/javascript" src="<?= freshcery;?>/assets/js/jquery-migrate.js"></script>
+    <script type="text/javascript" src="<?= freshcery;?>/assets/packages/bootstrap/libraries/popper.js"></script>
+    <script type="text/javascript" src="<?= freshcery;?>/assets/packages/bootstrap/bootstrap.js"></script>
+    <script type="text/javascript" src="<?= freshcery;?>/assets/packages/o2system-ui/o2system-ui.js"></script>
+    <script type="text/javascript" src="<?= freshcery;?>/assets/packages/owl-carousel/owl-carousel.js"></script>
+    <script type="text/javascript" src="<?= freshcery;?>/assets/packages/cloudzoom/cloudzoom.js"></script>
+    <script type="text/javascript" src="<?= freshcery;?>/assets/packages/thumbelina/thumbelina.js"></script>
+    <script type="text/javascript" src="<?= freshcery;?>/assets/packages/bootstrap-touchspin/bootstrap-touchspin.js"></script>
+    <script type="text/javascript" src="<?= freshcery;?>/assets/js/theme.js"></script>
 </body>
 </html>

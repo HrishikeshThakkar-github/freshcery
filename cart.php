@@ -1,27 +1,19 @@
 <?php
 include 'include/header.php';
 include 'configration/db.config.php';
-
-
 $products = $pdo->prepare("select * from cart where user_id=$_SESSION[user_id]");
 $products->execute();
-
 $cart_products = $products->fetchAll(PDO::FETCH_OBJ);
-//print_r($cart_products); 
-
 if (isset($_POST['submit'])) {
     $inp_price = $_POST['inp_price'];
     $_SESSION['price'] = $inp_price;
 
-    echo "<script>window.location.href='" . freshcery . "/checkout.php';</script>";
+    echo "<script>window.location.href='" . freshcery . "/checkout';</script>";
 }
 ?>
-
-
-
 <div id="page-content" class="page-content">
     <div class="banner">
-        <div class="jumbotron jumbotron-bg text-center rounded-0" style="background-image: url('<?php echo freshcery; ?>/assets/img/bg-header.jpg');">
+        <div class="jumbotron jumbotron-bg text-center rounded-0" style="background-image: url('<?= freshcery; ?>/assets/img/bg-header.jpg');">
             <div class="container">
                 <h1 class="pt-5">
                     Your Cart
@@ -32,7 +24,6 @@ if (isset($_POST['submit'])) {
             </div>
         </div>
     </div>
-
     <section id="cart">
         <div class="container">
             <div class="row">
@@ -58,31 +49,27 @@ if (isset($_POST['submit'])) {
                                         ?>
                                             <tr>
                                                 <td>
-                                                    <img src="<?php echo freshcery; ?>/assets/img/<?php echo $PRODUCT_IN_CART->pro_image; ?>" width="60">
+                                                    <img src="<?= freshcery; ?>/assets/img/<?= $PRODUCT_IN_CART->pro_image; ?>" width="60">
                                                 </td>
                                                 <td>
-                                                    <?php echo $PRODUCT_IN_CART->pro_title; ?><br>
-                                                    <!-- <small>1000g</small> -->
+                                                    <?= $PRODUCT_IN_CART->pro_title; ?><br>
                                                 </td>
                                                 <td class="pro_price">
-                                                    Rp <?php echo $PRODUCT_IN_CART->pro_price; ?>
+                                                    Rp <?= $PRODUCT_IN_CART->pro_price; ?>
                                                 </td>
                                                 <td>
-                                                    <input class="pro_qty form-control" type="number" min="1" data-bts-button-down-class="btn btn-primary" data-bts-button-up-class="btn btn-primary" value="<?php echo $PRODUCT_IN_CART->pro_qty; ?>" name="vertical-spin">
+                                                    <input class="pro_qty form-control" type="number" min="1" data-bts-button-down-class="btn btn-primary" data-bts-button-up-class="btn btn-primary" value="<?= $PRODUCT_IN_CART->pro_qty; ?>" name="vertical-spin">
                                                 </td>
                                                 <td>
-                                                    <a data-prod-id="<?php echo $PRODUCT_IN_CART->id; ?>" class="btn-update btn btn-primary">UPDATE</a>
-
-
+                                                    <a data-prod-id="<?= $PRODUCT_IN_CART->id; ?>" class="btn-update btn btn-primary">UPDATE</a>
                                                 </td>
                                                 <td class="total_price"> Rp.
                                                     <?php
-                                                    //$numeric_price = (float) explode("/", $PRODUCT_IN_CART->pro_price)[0];
                                                     echo $PRODUCT_IN_CART->pro_total;
                                                     ?>
                                                 </td>
                                                 <td>
-                                                    <a data-prod-id="<?php echo $PRODUCT_IN_CART->id; ?>" class="btn-delete btn btn-danger text-white"><i class="fa fa-times"></i></a>
+                                                    <a data-prod-id="<?= $PRODUCT_IN_CART->id; ?>" class="btn-delete btn btn-danger text-white"><i class="fa fa-times"></i></a>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>
@@ -97,8 +84,7 @@ if (isset($_POST['submit'])) {
                     </div>
                 </div>
                 <div class="col ">
-                    <a href="<?php echo freshcery; ?>/shop.php" class="btn btn-default">Continue Shopping</a>
-
+                    <a href="<?= freshcery; ?>/shop" class="btn btn-default">Continue Shopping</a>
                     <?php if (!isset($PRODUCT_IN_CART) || empty($PRODUCT_IN_CART)) : ?>
                         <div style="
                                background: #f8d7da; 
@@ -112,8 +98,6 @@ if (isset($_POST['submit'])) {
                            ">
                             <p style="margin: 0;"><strong>Your cart is empty. Start shopping now!</strong></p>
                         </div>
-
-                        <!-- Inline CSS for animation -->
                         <style>
                             @keyframes bounce {
 
@@ -130,7 +114,6 @@ if (isset($_POST['submit'])) {
                     <?php endif; ?>
                 </div>
                 <div class="col text-right">
-
                     <div class="clearfix"></div>
                     <h6 class="full_price mt-3"></h6>
                     <form action="cart.php" method="post">
@@ -145,7 +128,6 @@ if (isset($_POST['submit'])) {
         </div>
     </section>
 </div>
-
 <?php include 'include/footer.php'; ?>
 <script>
     $(document).ready(function() {

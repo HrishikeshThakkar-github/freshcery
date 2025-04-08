@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_category'])) {
         $image = "default.jpg"; // Default image
     }
 
-    if (addCategory($name, $description, $icon, $image)) {
+    if (addCategory($pdo, $name, $description, $icon, $image)) {
         header("Location: ../categories.php?message=Category added successfully");
     } else {
         header("Location: ../categories.php?message=Error adding category");
@@ -63,4 +63,3 @@ if (isset($_GET['delete'])) {
     }
     exit();
 }
-?>

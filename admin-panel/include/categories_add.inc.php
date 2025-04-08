@@ -1,6 +1,4 @@
-<?php include '../../configration/db.config.php' ?>
-<?php
-
+<?php include '../../configration/db.config.php';
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $id = htmlspecialchars($_POST['id']);
     $name = $_POST['name'];
@@ -36,5 +34,3 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit();
     }
 }
-
-?>

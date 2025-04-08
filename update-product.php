@@ -1,9 +1,7 @@
 <?php
 include 'include/header.php';
 include 'configration/db.config.php';
-
 echo "In update-product.php";
-
 if(isset($_POST['update'])) {
     // Sanitize and validate the inputs to prevent SQL injection
     $id = $_POST['id'];
@@ -29,5 +27,4 @@ if(isset($_POST['update'])) {
     }
 }
 ?>
-
 <?php include 'include/footer.php'; ?>

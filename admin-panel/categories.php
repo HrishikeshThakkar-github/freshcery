@@ -1,33 +1,22 @@
 <?php
 session_start();
 define("freshcery", "http://freshcery");
-?>
-<?php include '../configration/db.config.php' ?>
+include '../configration/db.config.php' ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="utf-8">
-  <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
   <title>Admin Panel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
   <link href="styles/style.css" rel="stylesheet">
-
   <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-  <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-  <!-- DataTables CSS -->
   <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-
-  <!-- DataTables JS -->
   <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-
-  <!-- DataTables Buttons (for export options) -->
   <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
   <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
   <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
@@ -35,11 +24,7 @@ define("freshcery", "http://freshcery");
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-
-
 </head>
-
-
 <?php
 $query = $pdo->prepare("SELECT * FROM categories ");
 $query->execute();
@@ -48,23 +33,12 @@ $categories = $query->fetchAll(PDO::FETCH_OBJ);
 $count = $pdo->prepare("SELECT count(*) FROM categories");
 $count->execute();
 $_SESSION['categories_count'] = $count->fetchColumn(); 
-
 ?>
-
 <body>
-
-
-
-
   <div id="wrapper">
-
     <?php include 'nav.php' ?>
-
-
     <div style="display: flex; flex-direction:column; justify-content:center; align-items: center;">
     <h1 class="display-3 fw-semibold text-center">CATEGORIES</h1>
-
-
     <button class="btn btn-primary mb-4 text-center" data-toggle="modal" data-target="#exampleModal">ADD Categories</button>
     </div>
     <div class="container-fluid">
@@ -82,27 +56,22 @@ $_SESSION['categories_count'] = $count->fetchColumn();
           <?php if (count($categories) > 0): ?>
             <?php foreach ($categories as $category): ?>
               <tr>
-
-                <td><?php echo $category->id; ?></td>
-                <td><img src="<?php echo freshcery; ?>/assets/img/<?php echo htmlspecialchars($category->image); ?>" height="100px" width="100px"></td>
-                <td><?php echo $category->name; ?></td>
-                <td><?php echo $category->description; ?></td>
-                <!-- <td><a href="#" class="btn btn-warning text-white text-center ">Update </a> <a href="#" class="btn btn-danger text-center">Delete </a></td> -->
+                <td><?= $category->id; ?></td>
+                <td><img src="<?= freshcery; ?>/assets/img/<?= htmlspecialchars($category->image); ?>" height="100px" width="100px"></td>
+                <td><?= $category->name; ?></td>
+                <td><?= $category->description; ?></td>
                 <td>
-                    <!-- Update Button -->
                     <button class="btn btn-warning text-white update-category-btn"
                             data-toggle="modal"
                             data-target="#updateModal"
-                            data-id="<?php echo $category->id; ?>"
-                            data-name="<?php echo $category->name; ?>"
-                            data-description="<?php echo $category->description; ?>"
-                            data-icon="<?php echo $category->icon; ?>"
-                            data-image="<?php echo $category->image; ?>">
+                            data-id="<?= $category->id; ?>"
+                            data-name="<?= $category->name; ?>"
+                            data-description="<?= $category->description; ?>"
+                            data-icon="<?= $category->icon; ?>"
+                            data-image="<?= $category->image; ?>">
                         Update
                     </button>
-
-                    <!-- Delete Button -->
-                    <a href="../admin-panel/include/category.inc.php?delete=<?php echo $category->id; ?>" class="btn btn-danger">Delete</a>
+                    <a href="../admin-panel/include/category.inc.php?delete=<?= $category->id; ?>" class="btn btn-danger">Delete</a>
                 </td>
               </tr>
             <?php endforeach; ?>
@@ -113,9 +82,6 @@ $_SESSION['categories_count'] = $count->fetchColumn();
           <?php endif; ?>
         </tbody>
       </table>
-
-
-
     </div>
   </div>
 
@@ -214,63 +180,5 @@ $(document).ready(function() {
     });
 });
 </script>
-<!-- <div class="container mt-5">
-    <h3 class="text-center">Products per Category</h3>
-    <canvas id="categoryChart"></canvas>
-</div> -->
-
-
-  <script type="text/javascript">
-
-  </script>
-
-  <!-- Include Chart.js -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    // Get data from PHP (Debugging Included)
-    let categories = <?php echo $categoriesJson; ?>;
-    let productCounts = <?php echo $productCountsJson; ?>;
-    
-    console.log("Categories:", categories);
-    console.log("Product Counts:", productCounts);
-
-    if (!categories || categories.length === 0) {
-        console.error("No data available for the chart.");
-        return; // Stop execution if no data
-    }
-
-    // Get the canvas element
-    let ctx = document.getElementById("categoryChart").getContext("2d");
-
-    // Create the bar chart
-    new Chart(ctx, {
-        type: "bar",
-        data: {
-            labels: categories,
-            datasets: [{
-                label: "Number of Products",
-                data: productCounts,
-                backgroundColor: "rgba(54, 162, 235, 0.6)",
-                borderColor: "rgba(54, 162, 235, 1)",
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    stepSize: 1
-                }
-            }
-        }
-    });
-});
-</script>
-
 </body>
-
 </html>

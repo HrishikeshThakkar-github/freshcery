@@ -1,6 +1,5 @@
 <?php
 include 'product.functions.php';
-
 // Ensure the request method is POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $action = $_POST['action'];
@@ -27,7 +26,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $id = $_POST['id'];
         $message = updateProduct($pdo, $id, $title, $description, $price, $quantity, $image, $exp_date, $category_id);
     }
-
     header("Location: ../products.php?message=" . urlencode($message));
     exit();
 }

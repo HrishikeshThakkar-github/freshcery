@@ -4,11 +4,18 @@ include '../../configration/db.config.php';
 /**
  * Add a new category.
  */
-function addCategory($name, $description, $icon, $image) {
-   global $pdo;
+function addCategory($pdo, $name, $description, $icon, $image)
+{
+    //global $pdo;
+    //    var_dump($name);
+    //    var_dump($description);
+    //    var_dump($icon);
+    //    var_dump($image);
+
 
     try {
-        $query = "INSERT INTO categories (name, description, image, icon) VALUES (:name, :description, :image, :icon)";
+        $query = "INSERT INTO categories (name, description, image, icon) VALUES (:name, :description, :image, :icon);";
+
         $stmt = $pdo->prepare($query);
         $stmt->execute([
             'name' => $name,
@@ -25,7 +32,8 @@ function addCategory($name, $description, $icon, $image) {
 /**
  * Update an existing category.
  */
-function updateCategory($id, $name, $description, $icon, $image) {
+function updateCategory($id, $name, $description, $icon, $image)
+{
     global $pdo;
 
     try {
@@ -47,7 +55,8 @@ function updateCategory($id, $name, $description, $icon, $image) {
 /**
  * Delete a category.
  */
-function deleteCategory($id) {
+function deleteCategory($id)
+{
     global $pdo;
 
     try {
@@ -58,4 +67,3 @@ function deleteCategory($id) {
         return false;
     }
 }
-?>
