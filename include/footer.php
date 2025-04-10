@@ -9,22 +9,22 @@
                     <h5>Links</h5>
                     <ul>
                         <li>
-                            <a href="about">About</a>
+                            <a href="<?= freshcery; ?>/about">About</a>
                         </li>
                         <li>
-                            <a href="contact">Contact Us</a>
+                            <a href="<?= freshcery; ?>/contact">Contact Us</a>
                         </li>
                         <li>
-                            <a href="faq">FAQ</a>
+                            <a href="<?= freshcery; ?>/faq">FAQ</a>
                         </li>
                         <li>
                             <a href="javascript:void(0)">How it Works</a>
                         </li>
                         <li>
-                            <a href="terms">Terms</a>
+                            <a href="<?= freshcery; ?>/faq">Terms</a>
                         </li>
                         <li>
-                            <a href="privacy">Privacy Policy</a>
+                            <a href="<?= freshcery; ?>/faq">Privacy Policy</a>
                         </li>
                     </ul>
                 </div>

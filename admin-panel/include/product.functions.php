@@ -4,7 +4,7 @@ include '../../configration/db.config.php';
 function addProduct($pdo, $title, $description, $price, $quantity, $image, $exp_date, $category_id) {
     try {
         $query = "INSERT INTO products (title, description, price, quantity, image, exp_date, category_id) 
-                  VALUES (:title, :description, :price, :quantity, :image, :exp_date, :category_id)";
+                  VALUES (:title, :description, :price, :quantity, :image, :exp_date, :category_id);";
 
         $stmt = $pdo->prepare($query);
         $stmt->execute([
@@ -27,7 +27,7 @@ function addProduct($pdo, $title, $description, $price, $quantity, $image, $exp_
 function updateProduct($pdo, $id, $title, $description, $price, $quantity, $image, $exp_date, $category_id) {
     try {
         $query = "UPDATE products SET title=:title, description=:description, price=:price, quantity=:quantity, 
-                  image=:image, exp_date=:exp_date, category_id=:category_id WHERE id=:id";
+                  image=:image, exp_date=:exp_date, category_id=:category_id WHERE id=:id;";
 
         $stmt = $pdo->prepare($query);
         $stmt->execute([
@@ -50,7 +50,7 @@ function updateProduct($pdo, $id, $title, $description, $price, $quantity, $imag
 // Function to delete a product
 function deleteProduct($pdo, $id) {
     try {
-        $query = "DELETE FROM products WHERE id = :id";
+        $query = "DELETE FROM products WHERE id = :id;";
         $stmt = $pdo->prepare($query);
         $stmt->execute(['id' => $id]);
 

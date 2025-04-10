@@ -37,7 +37,7 @@
                                                 <textarea class="form-control" rows="3" placeholder="Message"></textarea>
                                             </div>
                                         </div>
-                                        <div class="col-lg-12 text-right">
+                                        <div class="col-lg-12 text-center">
                                             <button type="submit" class="btn btn-lg btn-primary mb-5">Send</button>
                                         </div>
                                     </div>
@@ -66,8 +66,8 @@
                     </div>
                 </div>
             </div>
-
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.97915747782!2d107.58270291427688!3d-6.893096195019089!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e67b57d420db%3A0x4dd071fcb9157e80!2sBTC+Fashion+Mall!5e0!3m2!1sen!2sid!4v1522964715022" width="100%" height="450" frameborder="0" style="border:0;" allowfullscreen></iframe>
-        </section>
+            <iframe style="margin-left: 30rem;"  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1461.151854854564!2d72.49856209372149!3d23.029141316242306!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e84f4a59dacf7%3A0xff3e2c6ec71f55bd!2sSimform!5e0!3m2!1sen!2sin!4v1744188538434!5m2!1sen!2sin" width="1000" height="450" frameborder="0" style="border:0;" allowfullscreen></iframe>
+                <br><br><br>
+            </section>
     </div>
     <?php include 'include/footer.php' ?>
