@@ -53,8 +53,7 @@ $_SESSION['categories_count'] = $count->fetchColumn();
           </tr>
         </thead>
         <tbody>
-          <?php if (count($categories) > 0): ?>
-            <?php foreach ($categories as $category): ?>
+          <?php if (count($categories) > 0): foreach ($categories as $category): ?>
               <tr>
                 <td><?= $category->id; ?></td>
                 <td><img src="<?= freshcery; ?>/assets/img/<?= htmlspecialchars($category->image); ?>" height="100px" width="100px"></td>
@@ -74,8 +73,7 @@ $_SESSION['categories_count'] = $count->fetchColumn();
                     <a href="../admin-panel/include/category.inc.php?delete=<?= $category->id; ?>" class="btn btn-danger">Delete</a>
                 </td>
               </tr>
-            <?php endforeach; ?>
-          <?php else : ?>
+            <?php endforeach; else : ?>
             <div class="alert alert-danger bg-danger text-white text-centre">
               <h1>error!</h1>
             </div>
@@ -97,15 +95,15 @@ $_SESSION['categories_count'] = $count->fetchColumn();
           <div class="modal-body">
             <div class="form-group">
               <label for="name">Category Name</label>
-              <input type="text" name="name" class="form-control" required>
+              <input type="text" name="name" class="form-control" >
             </div>
             <div class="form-group">
               <label for="description">Description</label>
-              <input type="text" name="description" class="form-control" required>
+              <input type="text" name="description" class="form-control" >
             </div>
             <div class="form-group">
               <label for="icon">Icon</label>
-              <input type="text" name="icon" class="form-control" required>
+              <input type="text" name="icon" class="form-control" >
             </div>
             <div class="form-group">
               <label for="image">Category Image</label>
@@ -134,15 +132,15 @@ $_SESSION['categories_count'] = $count->fetchColumn();
 
             <div class="form-group">
               <label for="update_name">Category Name</label>
-              <input type="text" name="update_name" id="update_name" class="form-control" required>
+              <input type="text" name="update_name" id="update_name" class="form-control" >
             </div>
             <div class="form-group">
               <label for="update_description">Description</label>
-              <input type="text" name="update_description" id="update_description" class="form-control" required>
+              <input type="text" name="update_description" id="update_description" class="form-control" >
             </div>
             <div class="form-group">
               <label for="update_icon">Icon</label>
-              <input type="text" name="update_icon" id="update_icon" class="form-control" required>
+              <input type="text" name="update_icon" id="update_icon" class="form-control" >
             </div>
             <div class="form-group">
               <label for="update_image">Category Image</label>
@@ -158,7 +156,104 @@ $_SESSION['categories_count'] = $count->fetchColumn();
       </div>
     </div>
   </form>
-  
+  <script>
+document.addEventListener('DOMContentLoaded', function () {
+  const form = document.querySelector('form');
+  const nameInput = form.querySelector('input[name="name"]');
+  const descInput = form.querySelector('input[name="description"]');
+  const iconInput = form.querySelector('input[name="icon"]');
+  const imageInput = form.querySelector('input[name="image"]');
+
+  form.addEventListener('submit', function (e) {
+    let isValid = true;
+    let errorMessages = [];
+
+    // Category Name
+    if (nameInput.value.trim() === '') {
+      isValid = false;
+      errorMessages.push('Category Name is required.');
+    }
+
+    // Description
+    if (descInput.value.trim() === '') {
+      isValid = false;
+      errorMessages.push('Description is required.');
+    }
+
+    // Icon
+    if (iconInput.value.trim() === '') {
+      isValid = false;
+      errorMessages.push('Icon is required.');
+    }
+
+    // Image (optional but must be an image type if selected)
+    if (imageInput.value) {
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+      const file = imageInput.files[0];
+
+      if (file && !allowedTypes.includes(file.type)) {
+        isValid = false;
+        errorMessages.push('Only JPG, PNG, or GIF image types are allowed for Category Image.');
+      }
+    }
+
+    if (!isValid) {
+      e.preventDefault();
+      alert(errorMessages.join('\n'));
+    }
+  });
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const updateForm = document.querySelector('form[action*="category.inc.php"]');
+  const updateName = document.getElementById('update_name');
+  const updateDesc = document.getElementById('update_description');
+  const updateIcon = document.getElementById('update_icon');
+  const updateImage = updateForm.querySelector('input[name="update_image"]');
+
+  updateForm.addEventListener('submit', function (e) {
+    let isValid = true;
+    let errors = [];
+
+    // Check Category Name
+    if (updateName.value.trim() === '') {
+      isValid = false;
+      errors.push('Category Name is required.');
+    }
+
+    // Check Description
+    if (updateDesc.value.trim() === '') {
+      isValid = false;
+      errors.push('Description is required.');
+    }
+
+    // Check Icon
+    if (updateIcon.value.trim() === '') {
+      isValid = false;
+      errors.push('Icon is required.');
+    }
+
+    // Check Image type (only if a new file is selected)
+    if (updateImage.value) {
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+      const file = updateImage.files[0];
+
+      if (file && !allowedTypes.includes(file.type)) {
+        isValid = false;
+        errors.push('Only JPG, PNG, or GIF image types are allowed for Category Image.');
+      }
+    }
+
+    if (!isValid) {
+      e.preventDefault();
+      alert(errors.join('\n'));
+    }
+  });
+});
+</script>
+
+
   <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
   <script type="text/javascript">
   $(document).ready(function() {

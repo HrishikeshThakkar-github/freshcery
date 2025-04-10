@@ -60,10 +60,10 @@ if (isset($_SESSION['user_id'])) {
                         </li>
                         <?php if (!isset($_SESSION['username'])): ?>
                             <li class="nav-item">
-                                <a href="<?= freshcery; ?>/auth/register" class="nav-link">Register</a>
+                                <a href="<?= freshcery; ?>/register" class="nav-link">Register</a>
                             </li>
                             <li class="nav-item">
-                                <a href="<?= freshcery; ?>/auth/login" class="nav-link">Login</a>
+                                <a href="/login" class="nav-link">Login</a>
                             </li>
                         <?php else : ?>
                             <li class="nav-item dropdown">
@@ -72,8 +72,7 @@ if (isset($_SESSION['user_id'])) {
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="<?= freshcery; ?>/transaction">Transactions History</a>
-                                    <a class="dropdown-item" href="<?= freshcery; ?>/setting">Settings</a>
-                                    <a class="dropdown-item" href="<?= freshcery; ?>/auth/logout">Logout</a>
+                                    <a class="dropdown-item" href="<?= freshcery; ?>/logout">Logout</a>
                                 </div>
                             </li>
                             <li class="nav-item">

@@ -5,7 +5,6 @@ include '../configration/db.config.php' ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <title>Admin Panel</title>
@@ -25,8 +24,6 @@ include '../configration/db.config.php' ?>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 </head>
-
-
 <?php
 $products = $pdo->prepare("SELECT * FROM orders ");
 $products->execute();

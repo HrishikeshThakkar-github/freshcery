@@ -12,7 +12,6 @@
                 </div>
             </div>
         </div>
-
         <section class="bg-leaf">
             <div class="container">
                 <div class="row justify-content-center">
@@ -28,7 +27,7 @@
                         </p>
                     </div>
                 </div>
-
+                
                 <div class="row justify-content-center align-items-center mt-3">
                     <div class="col-md-4">
                         <img src="assets/img/fruits.jpg" class="img-fluid">

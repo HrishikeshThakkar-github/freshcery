@@ -14,7 +14,7 @@ include '../configration/db.config.php'
 
 <nav class="navbar header-top fixed-top navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
-    <a class="navbar-brand" href="#" style="font-style: italic;">
+    <a class="navbar-brand" href="<?= freshcery; ?>" style="font-style: italic;">
       <img src="../assets/img/logo/logo-white.png" alt="Freschcery admin-panel" height="30px" width="114px">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText"
@@ -37,7 +37,6 @@ include '../configration/db.config.php'
           <a class="nav-link" href="<?= freshcery; ?>/admin-panel/orders">Orders</a>
         </li>
       </ul>
-
       <ul class="navbar-nav ml-md-auto d-md-flex">
         <li class="nav-item">
           <a class="nav-link" href="<?= freshcery; ?>/auth/admin-logout">Logout</a>

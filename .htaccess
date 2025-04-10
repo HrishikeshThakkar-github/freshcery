@@ -1,5 +1,15 @@
 RewriteEngine On
-RewriteBase /
+
+# ✅ Skip existing files and folders
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.+)$ $1.php [L]
+
+# ✅ Custom clean route mappings
+RewriteRule ^login$ auth/login.php [L]
+RewriteRule ^register$ auth/register.php [L]
+RewriteRule ^logout$ auth/logout.php [L]
+RewriteRule ^dashboard$ admin/dashboard.php [L]
+RewriteRule ^products$ shop/products.php [L]
+
+# ✅ Optional: Generic fallback for root-level files (like /about → about.php)
+RewriteRule ^([a-zA-Z0-9_-]+)$ $1.php [L]

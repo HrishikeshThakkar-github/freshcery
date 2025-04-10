@@ -1,26 +1,25 @@
 <?php require_once '../configration/db.config.php';
- require_once '../include/header.php' ;
+require_once '../include/header.php';
 
 if (isset($_SESSION['username'])) {
     echo "<script> window.location.href='" . freshcery . "'</script>"; // so that whenever if a user is already logged in then that user cant acces the login page directly by editing the url
 }
+$errorMessage = "";
+
 if (isset($_POST['login'])) {
     $username = htmlspecialchars($_POST['username']);
     $password = $_POST['password'];
-    if (empty($username) || empty($password)) {
-        echo "<script>alert('one or more inputs are empty');</script>";
-    } else {
 
-        $query = "select * from users where username='$username'";
+    if (empty($username) || empty($password)) {
+        $errorMessage = "One or more inputs are empty.";
+    } else {
+        $query = "SELECT * FROM users WHERE username='$username'";
         $login = $pdo->prepare($query);
         $login->execute();
         $fetch = $login->fetch(PDO::FETCH_ASSOC);
 
-
         if ($login->rowCount() > 0) {
-
             if (password_verify($password, $fetch['mypassword'])) {
-
                 $_SESSION['username'] = $fetch['username'];
                 $_SESSION['email'] = $fetch['email'];
                 $_SESSION['user_id'] = $fetch['id'];
@@ -32,14 +31,14 @@ if (isset($_POST['login'])) {
                     echo "<script> window.location.href='" . freshcery . "';</script>";
                 }
                 exit();
-
+            } else {
+                $errorMessage = "Incorrect password.";
             }
         } else {
-            echo "<script> alert ('Email / password is wrong') </script>";
+            $errorMessage = "User not found.";
         }
     }
 }
-
 ?>
 <div id="page-content" class="page-content">
     <div class="banner">
@@ -54,10 +53,15 @@ if (isset($_POST['login'])) {
 
                 <div class="card card-login mb-5">
                     <div class="card-body">
-                        <form class="form-horizontal" method="POST" action="login.php">
+                        <form class="form-horizontal" method="POST" action="login">
+                        <?php if (!empty($errorMessage)): ?>
+                                <div class="custom-alert mt-3">
+                                    <?= $errorMessage ?>
+                                </div>
+                            <?php endif; ?>
                             <div class="form-group row mt-3">
                                 <div class="col-md-12">
-                                    <input class="form-control" type="text" required="" placeholder="Username" name="username">
+                                    <input class="form-control" type="text" placeholder="Username" name="username">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -81,7 +85,7 @@ if (isset($_POST['login'])) {
                             </div>
                         </form>
                         <div class="register-form">
-                            <h5>Not a user?<a style="color: #E91E63;" href="<?= freshcery; ?>/auth/register"> register</a></h5>
+                            <h5>Not a user?<a style="color: #E91E63;" href="<?= freshcery; ?>/register"> register</a></h5>
                         </div>
                     </div>
                 </div>
@@ -89,4 +93,35 @@ if (isset($_POST['login'])) {
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+        const username = document.querySelector('input[name="username"]');
+        username.focus();
+        const usernameError = document.createElement("div");
+        usernameError.style.color = "red";
+        username.parentNode.appendChild(usernameError);
+
+        username.addEventListener("blur", function() {
+            if (this.value.trim() === "") {
+                usernameError.textContent = "Username is required.";
+            } else {
+                usernameError.textContent = "";
+            }
+        });
+
+        const password = document.querySelector('input[name="password"]');
+        const passwordError = document.createElement("div");
+        passwordError.style.color = "red";
+        password.parentNode.appendChild(passwordError);
+
+        password.addEventListener("blur", function() {
+            if (this.value.trim() === "") {
+                passwordError.textContent = "Password is required.";
+            } else {
+                passwordError.textContent = "";
+            }
+        });
+    });
+</script>
 <?php include '../include/footer.php' ?>

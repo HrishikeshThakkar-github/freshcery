@@ -103,17 +103,24 @@ if (isset($_POST['submit'])) {
                             onclick="validateCartAction()">
                             <i class="fa fa-shopping-basket"></i> Add to Cart
                         </button>
+                        <br><br>
+                        <div id="customAlert" class="custom-alert" style="display: none;">
+                            <span id="customAlertMsg"></span>
+                        </div>
+
                         <script>
                             function validateCartAction() {
                                 var isLoggedIn = <?= isset($_SESSION['username']) ? 'true' : 'false'; ?>;
                                 if (!isLoggedIn) {
-                                    alert("Please login or register to add items to the cart.");
-                                    window.location.href = "<?= freshcery; ?>/auth/login"; // Redirect to login page
+                                    showCustomAlert('Please login to purchase Products');
+
+
                                 } else {
                                     document.querySelector(".btn-insert").form.submit(); // Submit the form if logged in
                                 }
                             }
                         </script>
+
                     </form>
                 </div>
             </div>
@@ -152,6 +159,20 @@ if (isset($_POST['submit'])) {
     </section>
 </div>
 <?php include 'include/footer.php'; ?>
+
+<script>
+    function showCustomAlert(message) {
+        const alertBox = document.getElementById("customAlert");
+        const alertMsg = document.getElementById("customAlertMsg");
+        alertMsg.textContent = message;
+        alertBox.style.display = "block";
+        setTimeout(() => {
+            alertBox.style.display = "none";
+            window.location.href = "<?= freshcery; ?>/login";
+        }, 2000);
+    }
+</script>
+
 <script>
     $(document).ready(function() {
         $(".form-control").keyup(function() {

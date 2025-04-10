@@ -32,6 +32,7 @@ if (isset($_POST['submit'])) {
                         <table class="table">
                             <thead>
                                 <tr>
+
                                     <th width="10%"></th>
                                     <th>Products</th>
                                     <th>Price</th>
@@ -39,6 +40,7 @@ if (isset($_POST['submit'])) {
                                     <th width="15%">Update</th>
                                     <th>Subtotal</th>
                                     <th>Delete</th>
+    
                                 </tr>
                             </thead>
                             <tbody>
