@@ -74,7 +74,6 @@ try {
             </div>
         </div>
     </div>
-    <!-- Dynamically getting the categories and the products in those categories -->
     <?php foreach ($categories as $category_id => $category): ?>
         <section id="category-<?= $category_id; ?>" class="gray-bg">
             <div class="container">
@@ -85,15 +84,14 @@ try {
                             <?= htmlspecialchars($category['name']); ?>
                         </h2>
                         <div class="product-carousel owl-carousel">
-                            <?php if (!empty($category['products'])): ?>
-                                <?php foreach ($category['products'] as $product): ?>
-                                    <div class="item">
-                                        <div class="card card-product">
+                            <?php if (!empty($category['products'])): foreach ($category['products'] as $product): ?>
+                                    <div class="item" style="height: 430px;">
+                                        <div class="card card-product" >
                                             <div class="card-badge">
                                                 <div class="card-badge-container left">
                                                     <span class="badge badge-default">Expires: <?= htmlspecialchars($product['exp_date']); ?></span>
                                                 </div>
-                                                <img src="assets/img/<?= htmlspecialchars($product['image']); ?>"
+                                                <img style="height: 280px; padding: 18px;" src="assets/img/<?= htmlspecialchars($product['image']); ?>"
                                                     alt="<?= htmlspecialchars($product['title']); ?>"
                                                     class="card-img-top">
                                             </div>
@@ -104,14 +102,13 @@ try {
                                                     </a>
                                                 </h4>
                                                 <div class="card-price">
-                                                    <span class="reguler">$<?= $product['price']; ?></span>
+                                                    <span class="reguler">₹<?= $product['price']; ?></span>
                                                 </div>
                                                 <a href="detail-product?id=<?= $product['id']; ?>" class="btn btn-block btn-primary">Add to Cart</a>
                                             </div>
                                         </div>
                                     </div>
-                                <?php endforeach; ?>
-                            <?php else: ?>
+                                <?php endforeach; else: ?>
                                 <p>No products available in this category.</p>
                             <?php endif; ?>
                         </div>
@@ -120,6 +117,5 @@ try {
             </div>
         </section>
     <?php endforeach; ?>
-
 </div>
 <?php include 'include/footer.php' ?>

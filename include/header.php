@@ -79,7 +79,6 @@ if (isset($_SESSION['user_id'])) {
                                 <a href="<?= freshcery; ?>/cart" class="nav-link" data-toggle="" aria-haspopup="true" aria-expanded="false">
                                     <i class="fa fa-shopping-basket"></i> <span class="badge badge-primary"><?= $cart_items ;?></span>
                                 </a>
-
                             </li>
                         <?php endif;  ?>
                     </ul>

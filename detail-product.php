@@ -67,7 +67,7 @@ if (isset($_POST['submit'])) {
         <div class="container">
             <div class="row">
                 <div class="col-sm-6">
-                    <img alt="Product Image" src="assets/img/<?= htmlspecialchars($product['image'] ?? 'default.jpg'); ?>" style="width: 100%;">
+                    <img style="height: 480px;" alt="Product Image" src="assets/img/<?= htmlspecialchars($product['image'] ?? 'default.jpg'); ?>" style="width: 100%;">
                 </div>
                 <div class="col-sm-6">
                     <p>
@@ -135,7 +135,7 @@ if (isset($_POST['submit'])) {
                         <?php foreach ($related_products as $related) { ?>
                             <div class="item">
                                 <div class="card card-product">
-                                    <img src="assets/img/<?= htmlspecialchars($related['image'] ?? 'default.jpg'); ?>" alt="Related Product" class="card-img-top">
+                                    <img style="height: 280px; padding: 18px;" src="assets/img/<?= htmlspecialchars($related['image'] ?? 'default.jpg'); ?>" alt="Related Product" class="card-img-top">
                                     <div class="card-body">
                                         <h4 class="card-title">
                                             <a href="detail-product?id=<?= $related['id']; ?>">
