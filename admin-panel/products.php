@@ -34,6 +34,10 @@ $products = $query->fetchAll(PDO::FETCH_OBJ);
 $count = $pdo->prepare("SELECT count(*) FROM products");
 $count->execute();
 $_SESSION['product_count'] = $count->fetchColumn();
+
+
+$stmt = $pdo->query("SELECT id, name FROM categories");
+$categories = $stmt->fetchAll(PDO::FETCH_OBJ);
 ?>
 
 <body>
@@ -65,7 +69,6 @@ $_SESSION['product_count'] = $count->fetchColumn();
           <?php if (count($products) > 0): ?>
             <?php foreach ($products as $product): ?>
               <tr>
-
                 <td><?= $product->id; ?></td>
                 <td><img src="<?= freshcery; ?>/assets/img/<?= htmlspecialchars($product->image); ?>" height="100px" width="100px"></td>
                 <td><?= $product->title; ?></td>
@@ -83,10 +86,11 @@ $_SESSION['product_count'] = $count->fetchColumn();
                     data-category_id="<?= $product->category_id; ?>"
                     data-toggle="modal"
                     data-target="#updateModal">Update</button>
-
-                  <a href="../admin-panel/include/product?action=delete&id=<?= $product->id; ?>"
-                    class="btn btn-danger text-center"
-                    onclick="return confirm('Are you sure?')">Delete</a>
+                  <form action="../admin-panel/include/product.php" method="POST" onsubmit="return confirm('Are you sure you want to delete this product?');" style="display:inline-block;">
+                    <input type="hidden" name="id" value="<?= $product->id ?>">
+                    <input type="hidden" name="action" value="delete">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                  </form>
                 </td>
 
               </tr>
@@ -130,12 +134,20 @@ $_SESSION['product_count'] = $count->fetchColumn();
             <input type="date" name="exp_date" id="exp_date" class="form-control">
             <span id="exp_date-error" class="text-danger small"></span>
             <br>
-            <input type="number" name="category_id" id="category_id" placeholder="Category ID" class="form-control">
+            <select name="category_id" id="category_id" class="form-control">
+              <option value="">-- Select Category --</option>
+              <?php foreach ($categories as $category): ?>
+                <option value="<?= $category->id ?>">
+                  <?= htmlspecialchars($category->name) ?>
+                </option>
+              <?php endforeach; ?>
+            </select>
             <span id="category_id-error" class="text-danger small"></span>
+
             <br>
           </div>
           <div class="modal-footer">
-          <input type="submit" class="btn btn-success" name="action" value="add">
+            <input type="submit" class="btn btn-success" name="action" value="add">
             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
           </div>
         </div>
@@ -143,6 +155,7 @@ $_SESSION['product_count'] = $count->fetchColumn();
     </div>
   </form>
   <form action="../admin-panel/include/product.php" method="POST" enctype="multipart/form-data">
+
     <input type="hidden" name="action" value="update">
     <input type="hidden" name="id" id="update_id">
     <input type="hidden" name="current_image" id="update_current_image">
@@ -153,6 +166,8 @@ $_SESSION['product_count'] = $count->fetchColumn();
             <h5 class="modal-title">Update Product</h5>
           </div>
           <div class="modal-body">
+
+
             <input type="text" name="title" id="update_title" class="form-control">
             <span id="title-error" class="text-danger small"></span>
             <label id="title-error"></label>
@@ -172,12 +187,20 @@ $_SESSION['product_count'] = $count->fetchColumn();
             <input type="date" name="exp_date" id="update_exp_date" class="form-control">
             <span id="exp_date-error" class="text-danger small"></span>
             <br>
-            <input type="number" name="category_id" id="update_category_id" class="form-control">
+            <select name="category_id" id="update_category_id" class="form-control">
+              <option value="">-- Select Category --</option>
+              <?php foreach ($categories as $category): ?>
+                <option value="<?= $category->id ?>">
+                  <?= htmlspecialchars($category->name) ?>
+                </option>
+              <?php endforeach; ?>
+            </select>
             <span id="category_id-error" class="text-danger small"></span>
+
             <br>
           </div>
           <div class="modal-footer">
-            <input type="submit" class="btn btn-success" value="Update">
+            <input type="submit" class="btn btn-success update-btn" value="Update">
             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
           </div>
         </div>
@@ -273,8 +296,7 @@ $_SESSION['product_count'] = $count->fetchColumn();
         }
       });
     });
-  </script>
-  <script>
+
     const updateTitle = document.getElementById('update_title');
     const updateDesc = document.getElementById('update_description');
     const updatePrice = document.getElementById('update_price');
@@ -382,27 +404,20 @@ $_SESSION['product_count'] = $count->fetchColumn();
 
 
   <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $('.table').DataTable({
-        "pageLength": 4, // Show only 4 entries per page
-        "lengthMenu": [4, 8, 12, 16], // Allow user to change entries per page
-        "ordering": false // (Optional) Disable sorting if not needed
-      });
-    });
-  </script>
+
 
   <script>
     $(document).ready(function() {
+
       $(".update-btn").click(function() {
-        var id = $(this).data("id");
-        var title = $(this).data("title");
-        var description = $(this).data("description");
-        var price = $(this).data("price");
-        var quantity = $(this).data("quantity");
-        var image = $(this).data("image");
-        var exp_date = $(this).data("exp_date");
-        var category_id = $(this).data("category_id");
+        let id = $(this).data("id");
+        let title = $(this).data("title");
+        let description = $(this).data("description");
+        let price = $(this).data("price");
+        let quantity = $(this).data("quantity");
+        let image = $(this).data("image");
+        let exp_date = $(this).data("exp_date");
+        let category_id = $(this).data("category_id");
 
         $("#update_id").val(id);
         $("#update_title").val(title);
@@ -424,7 +439,6 @@ $_SESSION['product_count'] = $count->fetchColumn();
         $("#update_title").off("blur").on("blur", function() {
           let error = $("#title-error");
           error.text($('#update_title').val().trim() === "" ? "" : "Title is required.");
-          console.log("in update");
         });
 
 
@@ -475,7 +489,8 @@ $_SESSION['product_count'] = $count->fetchColumn();
         $("#update_category_id").off("blur").on("blur", function() {
           let val = $(this).val().trim();
           let error = $("#category_id-error");
-          error.text(parseInt(val) <= 0 ? "" : "Category ID must be a positive number.");
+          error.text(parseInt(val) > 0 ? "" : "Category ID must be a positive number.");
+
         });
 
         // Image (change)
@@ -494,7 +509,15 @@ $_SESSION['product_count'] = $count->fetchColumn();
     });
   </script>
 
-
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.table').DataTable({
+        "pageLength": 4, // Show only 4 entries per page
+        "lengthMenu": [4, 8, 12, 16], // Allow user to change entries per page
+        "ordering": false // (Optional) Disable sorting if not needed
+      });
+    });
+  </script>
   <script type="text/javascript">
 
   </script>

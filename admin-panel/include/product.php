@@ -25,6 +25,19 @@ function cleanInput($input) {
 }
 
 
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['action']) && $_POST['action'] === "delete") {
+    $id = $_POST['id'];
+
+    if (!is_numeric($id) || $id <= 0) {
+        $message = "Invalid product ID for deletion.";
+    } else {
+        $message = deleteProduct($pdo, $id);
+    }
+
+    header("Location: ../products.php?message=" . urlencode($message));
+    exit();
+}
+
 
 // Process POST request
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -82,6 +95,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $message = "Invalid product ID for update.";
         } else {
             $message = updateProduct($pdo, $id, $title, $description, $price, $quantity, $image, $exp_date, $category_id);
+            var_dump($message);
         }
     }
 
@@ -90,16 +104,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 }
 
 // Process GET request for deletion
-if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET['action']) && $_GET['action'] === "delete") {
-    $id = $_GET['id'];
 
-    if (!is_numeric($id) || $id <= 0) {
-        $message = "Invalid product ID for deletion.";
-    } else {
-        $message = deleteProduct($pdo, $id);
-    }
 
-    header("Location: ../products.php?message=" . urlencode($message));
-    exit();
-}
 ?>

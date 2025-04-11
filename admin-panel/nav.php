@@ -10,7 +10,7 @@ include '../configration/db.config.php'
 ?>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="styles/style.css">
+<link rel="stylesheet" href="/admin-panel/styles/style.css">
 
 <nav class="navbar header-top fixed-top navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
@@ -25,21 +25,21 @@ include '../configration/db.config.php'
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav side-nav">
         <li class="nav-item">
-          <a class="nav-link text-white" href="<?= freshcery; ?>/admin-panel/admin">Home</a>
+          <a class="nav-link text-white" href="/dashboard">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="<?= freshcery; ?>/admin-panel/categories">Categories</a>
+          <a class="nav-link" href="<?= freshcery; ?>/categories">Categories</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="<?= freshcery; ?>/admin-panel/products">Products</a>
+          <a class="nav-link" href="<?= freshcery; ?>/products">Products</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="<?= freshcery; ?>/admin-panel/orders">Orders</a>
+          <a class="nav-link" href="<?= freshcery; ?>/orders">Orders</a>
         </li>
       </ul>
       <ul class="navbar-nav ml-md-auto d-md-flex">
         <li class="nav-item">
-          <a class="nav-link" href="<?= freshcery; ?>/auth/admin-logout">Logout</a>
+          <a class="nav-link" href="<?= freshcery; ?>/admin-logout">Logout</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link" id="navbarDropdown" style="color:white;">
