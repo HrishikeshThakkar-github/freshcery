@@ -1,10 +1,14 @@
 <?php
 session_start();
-
 $errorMessage = "";
 include 'include/header.php';
 include 'configration/db.config.php';
 require('payment_system/config.php');
+require __DIR__ . '/payment_system/vendor/autoload.php'; // Adjust path based on folder location
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+\Stripe\Stripe::setApiKey($_ENV['STRIPE_SECRET_KEY']);
+
 $products = $pdo->prepare("SELECT * FROM cart WHERE user_id = :user_id");
 $products->execute([':user_id' => $_SESSION['user_id']]);
 $cart_products = $products->fetchAll(PDO::FETCH_OBJ);
@@ -15,7 +19,6 @@ if (isset($_POST['order_details'])) {
     $country = htmlspecialchars($_POST['country']);
     $zip_code = htmlspecialchars($_POST['zip_code']);
     $email = $_POST['email'];
-
     $phone_number = htmlspecialchars($_POST['phone_number']);
     $order_notes = htmlspecialchars($_POST['order_notes']);
     $user_id = $_SESSION['user_id'];
@@ -43,10 +46,9 @@ if (isset($_POST['order_details'])) {
         if (isset($_SESSION['Total_order_value'])) {
             $order_details = $pdo->prepare('select id FROM orders WHERE user_id = :user_id order by created_at desc limit 1;');
             $order_details->execute([':user_id' => $_SESSION['user_id']]);
-            $order_details_id=$order_details->fetch(PDO::FETCH_ASSOC);
-            $_SESSION['order_details_id']=$order_details_id;
+            $order_details_id = $order_details->fetch(PDO::FETCH_ASSOC);
+            $_SESSION['order_details_id'] = $order_details_id;
         }
-        
     }
 }
 
@@ -54,8 +56,6 @@ if (isset($_SESSION['Total_order_value'])) {
     $order_details = $pdo->prepare('select pro_id FROM cart WHERE user_id = :user_id');
     $order_details->execute([':user_id' => $_SESSION['user_id']]);
 }
-
-
 $shipping_charges = 80;
 ?>
 
@@ -72,13 +72,11 @@ $shipping_charges = 80;
             </div>
         </div>
     </div>
-
     <section id="checkout">
         <div class="container ">
             <div class="row">
                 <div class=" col-xs-12 col-sm-7">
                     <h5 class="mb-3">BILLING DETAILS</h5>
-
                     <form action="checkout" method="POST" class="bill-detail">
                         <fieldset>
                             <div class="form-group">
@@ -104,7 +102,6 @@ $shipping_charges = 80;
                                     <input class="form-control" name="phone_number" placeholder="Phone Number" type="tel">
                                 </div>
                             </div>
-
                             <div class="form-group">
                                 <textarea class="form-control" name="order_notes" placeholder="Order Notes"></textarea>
                             </div>
@@ -125,32 +122,21 @@ $shipping_charges = 80;
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php if (isset($_SESSION['username'])): ?>
-                                        <?php if (count($cart_products) > 0): ?>
-                                            <?php
-                                            foreach ($cart_products as $PRODUCT_IN_CART):
-                                            ?>
+                                     <?php if (isset($_SESSION['username']) && (count($cart_products) > 0)): 
+                                            foreach ($cart_products as $PRODUCT_IN_CART):?>
                                                 <tr>
                                                     <td>
                                                         <?= $PRODUCT_IN_CART->pro_title; ?> x <?= $PRODUCT_IN_CART->pro_qty; ?><br>
-                                                        <!-- <small>1000g</small> -->
                                                     </td>
-
                                                     <td class="text-right total_price"> Rp.
-                                                        <?php
-                                                        //$numeric_price = (float) explode("/", $PRODUCT_IN_CART->pro_price)[0];
-                                                        echo $PRODUCT_IN_CART->pro_total;
-                                                        ?>
+                                                        <?= $PRODUCT_IN_CART->pro_total; ?>
                                                     </td>
-
                                                 </tr>
-                                            <?php endforeach; ?>
-                                        <?php else : ?>
+                                            <?php endforeach; else : ?>
                                             <div class="alert alert-danger bg-danger text-white text-centre">
                                                 <h1>error!</h1>
                                             </div>
                                         <?php endif; ?>
-                                    <?php endif; ?>
                                 </tbody>
                                 <tfooter>
                                     <tr>
@@ -175,8 +161,7 @@ $shipping_charges = 80;
                                         </td>
                                         <td class="text-right">
                                             <strong>Rp. <?= $checkout_payment = $shipping_charges + $_SESSION['price']; ?></strong>
-                                            <?php $_SESSION['payment'] = $checkout_payment //to be passed on to the stripe payment
-                                            ?>
+                                            <?php $_SESSION['payment'] = $checkout_payment ?>
                                         </td>
                                     </tr>
                                 </tfooter>
@@ -187,8 +172,6 @@ $shipping_charges = 80;
                     </div>
                     <?php
                     if (isset($_SESSION['Total_order_value'])) : ?>
-
-
                         <p class="text-right mt-3">
                             <input checked="" type="checkbox"> I’ve read &amp; accept the <a href="#">terms &amp; conditions</a>
                         </p>
@@ -196,7 +179,7 @@ $shipping_charges = 80;
                             <form action="submit" method="post">
                                 <script
                                     src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                                    data-key="<?= $publishableKey ?>"
+                                    data-key="<?= $_ENV['STRIPE_PUBLIC_KEY'] ?>"
                                     data-amount="<?= $_SESSION["payment"] * 100 ?>"
                                     data-name="Freshcery"
                                     data-description="Stripe Payment Gateway"
@@ -204,12 +187,9 @@ $shipping_charges = 80;
                                     data-currency="inr"
                                     data-email="hrishi.pvt@gmail.com">
                                 </script>
-
                             </form>
                         </a>
-
-                        <br><br><br><br><br><br><br>
-
+                        <br><br><br><br>
                         <div class="custom-alert mt-3">
                             <?= $errorMessage ?>
                         </div>
@@ -223,7 +203,6 @@ $shipping_charges = 80;
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        // FULL NAME VALIDATION
         const name = document.querySelector('input[name="name"]');
         name.focus();
         const nameError = document.createElement("div");
@@ -238,14 +217,10 @@ $shipping_charges = 80;
                 errorDiv.textContent = "";
             }
         });
-
         const address = document.querySelector('textarea[name="address"]');
-
-
         const addressError = document.createElement("div");
         addressError.style.color = "red";
         address.parentNode.appendChild(addressError);
-
         address.addEventListener("blur", function() {
             const value = this.value.trim();
             if (value === "") {
@@ -258,15 +233,12 @@ $shipping_charges = 80;
                 addressError.textContent = "";
             }
         });
-
         const city = document.querySelector('input[name="city"]');
         const cityError = document.createElement("div");
         cityError.style.color = "red";
         city.parentNode.appendChild(cityError);
-
         city.addEventListener("blur", function() {
             const value = this.value.trim().toLowerCase();
-
             if (value === "") {
                 cityError.textContent = "City is required.";
             } else if (value !== "ahmedabad") {
@@ -275,15 +247,12 @@ $shipping_charges = 80;
                 cityError.textContent = "";
             }
         });
-
         const country = document.querySelector('input[name="country"]');
         const countryError = document.createElement("div");
         countryError.style.color = "red";
         country.parentNode.appendChild(countryError);
-
         country.addEventListener("blur", function() {
             const value = this.value.trim().toLowerCase();
-
             if (value === "") {
                 countryError.textContent = "Country is required.";
             } else if (value !== "india") {
@@ -292,25 +261,20 @@ $shipping_charges = 80;
                 countryError.textContent = "";
             }
         });
-
         const zipcode = document.querySelector('input[name="zip_code"]');
         const zipError = document.createElement("div");
         zipError.style.color = "red";
         zipcode.parentNode.appendChild(zipError);
-
         zipError.id = "zipError";
-
         const serviceablePins = [
             "380001", "380002", "380003", "380004", "380005", "380006", "380007", "380008", "380009",
             "380010", "380013", "380014", "380015", "380016", "380017", "380018", "380019", "380021",
             "380022", "380023", "380024", "380025", "380026", "380027", "380028", "380050", "382415",
             "382418", "382350", "382345"
         ];
-
         zipcode.addEventListener("blur", function() {
             const value = this.value.trim();
             const zipRegex = /^[1-9][0-9]{5}$/;
-
             if (value === "") {
                 zipError.textContent = "PIN code is required.";
             } else if (!zipRegex.test(value)) {
@@ -321,18 +285,13 @@ $shipping_charges = 80;
                 zipError.textContent = "";
             }
         });
-
-
-        // EMAIL VALIDATION
         const email = document.querySelector('input[name="email"]');
         const emailError = document.createElement("div");
         emailError.style.color = "red";
         email.parentNode.appendChild(emailError);
-
         email.addEventListener("blur", function() {
             const value = this.value.trim();
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
             if (value === "") {
                 emailError.textContent = "Email is required.";
             } else if (!emailRegex.test(value)) {
@@ -341,17 +300,13 @@ $shipping_charges = 80;
                 emailError.textContent = "";
             }
         });
-
-        // PHONE NUMBER VALIDATION
         const phone = document.querySelector('input[name="phone_number"]');
         const phoneError = document.createElement("div");
         phoneError.style.color = "red";
         phone.parentNode.appendChild(phoneError);
-
         phone.addEventListener("blur", function() {
             const value = this.value.trim();
             const phoneRegex = /^[6-9][0-9]{9}$/;
-
             if (value === "") {
                 phoneError.textContent = "Phone number is required.";
             } else if (!phoneRegex.test(value)) {
@@ -360,14 +315,10 @@ $shipping_charges = 80;
                 phoneError.textContent = "";
             }
         });
-
-
-
         const order_notes = document.querySelector('textarea[name="order_notes"]');
         const notesError = document.createElement("div");
         notesError.style.color = "red";
         orderNotes.parentNode.appendChild(notesError);
-
         orderNotes.addEventListener("blur", function() {
             const value = this.value.trim();
 

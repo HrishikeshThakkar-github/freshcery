@@ -1,5 +1,9 @@
 <?php
 
+require __DIR__ . '/../payment_system/vendor/autoload.php';
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__.'/../');
+$dotenv->load();
+ 
 
 //now to restrict the viewership of this page directly through the url we ca nuse:
 
@@ -7,28 +11,15 @@
 //     //when someone try to access by url gets redirected to homepage-> index.php
 //     header("Location: http://freshcery/");
 // }
-
-$dsn = "mysql:host=localhost;dbname=freshcery;charset=utf8mb4";
-$db_user = "root";  
-$db_pass = "Simform@123";  
+$db_user = $_ENV['DB_USER'];
+$db_pass = $_ENV['DB_PASS']; 
+$db_name = $_ENV['DB_NAME'];
+$dsn = "mysql:host=localhost;dbname=$db_name;charset=utf8mb4";
 
 try {
     $pdo = new PDO($dsn, $db_user, $db_pass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    //echo "connected";
 } catch (PDOException $e) {
     echo $e->getMessage();
 }
-
-//to open in local server
-//http://freshcery/
-
-
-
-
-//display startup error
-//error reporting
-//display errpr to printout errors
-
-//ini_set('display_startup_errors', 1);ini_set('display_errors', 1);error_reporting(-1);
 ?> 

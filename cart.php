@@ -32,7 +32,6 @@ if (isset($_POST['submit'])) {
                         <table class="table">
                             <thead>
                                 <tr>
-
                                     <th width="10%"></th>
                                     <th>Products</th>
                                     <th>Price</th>
@@ -40,13 +39,10 @@ if (isset($_POST['submit'])) {
                                     <th width="15%">Update</th>
                                     <th>Subtotal</th>
                                     <th>Delete</th>
-    
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php if (isset($_SESSION['username'])): ?>
-                                    <?php if (count($cart_products) > 0): ?>
-                                        <?php
+                                <?php if (isset($_SESSION['username'])&& count($cart_products) > 0):
                                         foreach ($cart_products as $PRODUCT_IN_CART):
                                         ?>
                                             <tr>
@@ -66,21 +62,17 @@ if (isset($_POST['submit'])) {
                                                     <a data-prod-id="<?= $PRODUCT_IN_CART->id; ?>" class="btn-update btn btn-primary">UPDATE</a>
                                                 </td>
                                                 <td class="total_price"> Rp.
-                                                    <?php
-                                                    echo $PRODUCT_IN_CART->pro_total;
-                                                    ?>
+                                                    <?= $PRODUCT_IN_CART->pro_total; ?>
                                                 </td>
                                                 <td>
                                                     <a data-prod-id="<?= $PRODUCT_IN_CART->id; ?>" class="btn-delete btn btn-danger text-white"><i class="fa fa-times"></i></a>
                                                 </td>
                                             </tr>
-                                        <?php endforeach; ?>
-                                    <?php else : ?>
+                                        <?php endforeach; else : ?>
                                         <div class="alert alert-danger bg-danger text-white text-centre">
                                             <h1>Cart is empty !!!</h1>
                                         </div>
                                     <?php endif; ?>
-                                <?php endif; ?>
                             </tbody>
                         </table>
                     </div>
@@ -102,12 +94,10 @@ if (isset($_POST['submit'])) {
                         </div>
                         <style>
                             @keyframes bounce {
-
                                 0%,
                                 100% {
                                     transform: translateY(0);
                                 }
-
                                 50% {
                                     transform: translateY(-5px);
                                 }
@@ -141,37 +131,29 @@ if (isset($_POST['submit'])) {
 
         $(".pro_qty").on("input", function() {
             var $el = $(this).closest("tr");
-
             var pro_qty = parseInt($el.find(".pro_qty").val());
-            var pro_price = $el.find(".pro_price").text().replace("Rp", "").trim(); // Remove "Rp"
-            pro_price = parseFloat(pro_price); // Convert string to float
+            var pro_price = $el.find(".pro_price").text().replace("Rp", "").trim(); 
+            pro_price = parseFloat(pro_price); 
 
             if (!isNaN(pro_qty) && !isNaN(pro_price)) {
                 var total = pro_qty * pro_price;
-                $el.find(".total_price").text("Rp " + total.toFixed(2)); // Display with currency format
+                $el.find(".total_price").text("Rp " + total.toFixed(2)); 
             }
         });
         $(".btn-update").on('click', function(e) {
-            e.preventDefault(); // Prevent default action of the anchor tag
-
+            e.preventDefault(); 
             var $el = $(this).closest('tr');
-
-
-            // Fetch the cart id, product quantity, and price from the table row
-            // var id = $(this).val(); // The cart item id from the button value
             var id = $(this).data("prod-id");
             console.log(id);
             $el
-            var pro_qty = $el.find(".pro_qty").val(); // Quantity from input field
-            var pro_price = $el.find(".pro_price").text().replace("Rp", "").trim(); // Price, cleaning up "Rp" text
+            var pro_qty = $el.find(".pro_qty").val(); 
+            var pro_price = $el.find(".pro_price").text().replace("Rp", "").trim(); 
             pro_price = parseFloat(pro_price);
-
             if (isNaN(pro_qty) || isNaN(pro_price)) {
                 alert("Please check the quantity and price values.");
                 return;
             }
 
-            // Calculate the total price
             var total = pro_qty * pro_price;
 
             $.ajax({

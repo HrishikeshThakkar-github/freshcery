@@ -36,9 +36,8 @@ $orders = $products->fetchAll(PDO::FETCH_OBJ);
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php if (isset($_SESSION['username'])): ?>
-                                        <?php if (count($orders) > 0): ?>
-                                            <?php foreach ($orders as $order): ?>
+                                    <?php if (isset($_SESSION['username']) && count($orders) > 0): 
+                                        foreach ($orders as $order): ?>
                                                 <tr>
                                                     <td width="5%"></td>
                                                     <td><?= $order->id; ?></td>
@@ -46,13 +45,11 @@ $orders = $products->fetchAll(PDO::FETCH_OBJ);
                                                     <td>Rp. <?= $order->Total_order_value; ?></td>
                                                     <td><?= $order->status; ?></td>
                                                 </tr>
-                                            <?php endforeach; ?>
-                                        <?php else : ?>
+                                            <?php endforeach; else : ?>
                                             <div class="alert alert-danger bg-danger text-white text-centre">
                                                 <h1>error!</h1>
                                             </div>
                                         <?php endif; ?>
-                                    <?php endif; ?>
                                 </tbody>
                             </table>
                         </div>
