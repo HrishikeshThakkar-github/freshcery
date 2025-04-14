@@ -102,7 +102,7 @@ try {
                                                     </a>
                                                 </h4>
                                                 <div class="card-price">
-                                                    <span class="reguler">₹<?= $product['price']; ?></span>
+                                                    <span class="reguler">Rp. <?= $product['price']; ?></span>
                                                 </div>
                                                 <a href="detail-product?id=<?= $product['id']; ?>" class="btn btn-block btn-primary">Add to Cart</a>
                                             </div>
