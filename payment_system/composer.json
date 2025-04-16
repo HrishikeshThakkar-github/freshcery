@@ -1,0 +1,19 @@
+{
+    "name": "hrishikesh.thakkarsimformsolutions.com/freshcery",
+    "autoload": {
+        "psr-4": {
+            "HrishikeshThakkarsimformsolutionsCom\\Freshcery\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "HrishikeshThakkar-github",
+            "email": "hrishi.pvt@gmail.com"
+        }
+    ],
+    "require": {
+        "stripe/stripe-php": "^17.1",
+        "vlucas/phpdotenv": "^5.6",
+        "phpmailer/phpmailer": "^6.9"
+    }
+}

@@ -1,6 +1,3 @@
 .vscode/launch.json
 payment_system/vendor/
-payment_system/composer-setup.php/
-payment_system/composer.json/
-payment_system/composer.lock/
 .env
